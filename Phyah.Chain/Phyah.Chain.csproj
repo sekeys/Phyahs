@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Helper\" />
-    <Folder Include="Security\" />
+    <ProjectReference Include="..\Phyah\Phyah.csproj" />
   </ItemGroup>
 
 </Project>

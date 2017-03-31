@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Helper\" />
-    <Folder Include="Security\" />
+    <ProjectReference Include="..\Phyah.Chain\Phyah.Chain.csproj" />
   </ItemGroup>
 
 </Project>

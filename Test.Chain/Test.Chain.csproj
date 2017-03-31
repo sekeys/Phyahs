@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Helper\" />
-    <Folder Include="Security\" />
+    <ProjectReference Include="..\Phyah.Chain\Phyah.Chain.csproj" />
   </ItemGroup>
 
 </Project>
