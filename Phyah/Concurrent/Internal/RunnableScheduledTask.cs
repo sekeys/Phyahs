@@ -1,6 +1,6 @@
 ﻿using Phyah.Interface;
 
-namespace Phyah.Concurrent
+namespace Phyah.Concurrency
 {
     sealed class RunnableScheduledTask : ScheduledTask
     {

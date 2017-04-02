@@ -1,6 +1,6 @@
 ﻿
 
-namespace Phyah.Concurrent
+namespace Phyah.Concurrency
 {
     using System.Runtime.CompilerServices;
     using System.Threading.Tasks;

@@ -6,8 +6,16 @@ namespace Phyah.Chain
     using System;
     using Phyah.Interface;
     using Phyah.Collection;
-    public class PriorityChain : IPriorityChain
+    using System.Threading;
+
+    public class PriorityChain : IPriorityChain,IDisposable
     {
+
+        const int CANCELED = 1;
+        const int UNCANCELED = 0;
+        protected int IsCanceled = 0;
+        public bool Canceled => IsCanceled == CANCELED;
+
         public PriorityChain()
         {
 
@@ -101,5 +109,40 @@ namespace Phyah.Chain
                 }
             }
         }
+
+        public void Cancel()
+        {
+            if (Canceled)
+            {
+                return;
+            }
+            Interlocked.Exchange(ref IsCanceled, CANCELED);
+            Dispose();
+        }
+
+        #region IDisposable Support
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                GC.Collect();
+                disposedValue = true;
+            }
+        }
+
+        // TODO: 仅当以上 Dispose(bool disposing) 拥有用于释放未托管资源的代码时才替代终结器。
+        // ~AsyncChain() {
+        //   // 请勿更改此代码。将清理代码放入以上 Dispose(bool disposing) 中。
+        //   Dispose(false);
+        // }
+
+        // 添加此代码以正确实现可处置模式。
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        #endregion
     }
 }

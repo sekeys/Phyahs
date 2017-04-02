@@ -1,7 +1,7 @@
 ﻿using System;
 using Phyah.Interface;
 
-namespace Phyah.Concurrent
+namespace Phyah.Concurrency
 {
     using System;
 

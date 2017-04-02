@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Phyah.Concurrent
+namespace Phyah.Concurrency
 {
     public sealed class TaskCompletionSource : TaskCompletionSource<int>
     {

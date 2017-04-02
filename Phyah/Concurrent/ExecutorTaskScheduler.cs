@@ -1,5 +1,5 @@
 ﻿
-namespace Phyah.Concurrent
+namespace Phyah.Concurrency
 {
     using Phyah.Interface;
     using System.Collections.Generic;

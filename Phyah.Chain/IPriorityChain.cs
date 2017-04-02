@@ -6,7 +6,6 @@ namespace Phyah.Chain
     using System;
     public interface IPriorityChain:IChain 
     {
-
         IChain Link(IRunnable runnable,int priority);
         IChain Link(Action action, int priority);
         IChain Link(Action<object> action, object state, int priority);

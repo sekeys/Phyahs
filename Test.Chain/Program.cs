@@ -1,18 +1,41 @@
 ﻿using Phyah.Chain;
 using System;
+using System.Threading;
 
 namespace Test
 {
     class Program
     {
-        static void Main(string[] args)
+        static  void Main(string[] args)
         {
-            Chain.Links(() =>
+
+            var ac = AsyncChain.Links(() =>
+             {
+                 Console.WriteLine("Hellow World11");
+
+             });
+            ac.Link(() =>
             {
-                Console.WriteLine("Hello World!");
-            }).Link((t) => {
-                Console.WriteLine(t);
-            }, 1).Run();
+                
+                Console.WriteLine("Hellow World22");
+
+            }).Link(() =>
+            {
+                Console.WriteLine("Hellow World2333");
+
+            }).CancelAsync().Link(() =>
+            {
+                Console.WriteLine("Hellow World666");
+
+            }).CancelAsync().Link(() =>
+            {
+                Console.WriteLine("Hellow World4444");
+
+            }).CancelAsync().Link(() =>
+            {
+                Console.WriteLine("Hellow World4555");
+
+            });
             Console.WriteLine("Hello World!");
             Console.Read();
         }

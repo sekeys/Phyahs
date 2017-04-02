@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Phyah.Interface;
 using Phyah.Collection;
 
-namespace Phyah.Concurrent
+namespace Phyah.Concurrency
 {
     public class IndependentThreadExecutor : Executor
     {

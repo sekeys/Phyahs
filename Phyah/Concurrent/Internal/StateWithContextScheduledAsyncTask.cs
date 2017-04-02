@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Phyah.Concurrent
+namespace Phyah.Concurrency
 {
     using System;
     using System.Threading;
