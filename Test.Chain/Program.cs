@@ -27,11 +27,11 @@ namespace Test
             {
                 Console.WriteLine("Hellow World666");
 
-            }).CancelAsync().Link(() =>
+            }).Link(() =>
             {
                 Console.WriteLine("Hellow World4444");
 
-            }).CancelAsync().Link(() =>
+            }).Link(() =>
             {
                 Console.WriteLine("Hellow World4555");
 

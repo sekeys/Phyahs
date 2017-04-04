@@ -7,7 +7,7 @@ namespace Phyah.Chain
     using System.Threading.Tasks;
     using System.Threading;
 
-    public class AsyncChain : IAsyncChain,IDisposable
+    public class AsyncChain : IAsyncChain, IDisposable
     {
         const int CANCELED = 1;
         const int UNCANCELED = 0;
@@ -32,7 +32,7 @@ namespace Phyah.Chain
         {
         }
 
-        public   IAsyncChain Link(IRunnable runnable)
+        public IAsyncChain Link(IRunnable runnable)
         {
             if (ExecutorQueue.IsShutdown ||
                 ExecutorQueue.IsShuttingDown
@@ -41,17 +41,17 @@ namespace Phyah.Chain
             {
                 throw new ChainCancelException();
             }
-              ExecutorQueue.Schedule(runnable,TimeSpan.Zero);
+            ExecutorQueue.Schedule(runnable, TimeSpan.Zero);
             return this;
         }
 
-        public   IAsyncChain Link(Action action) =>   Link(new Runnable(action));
+        public IAsyncChain Link(Action action) => Link(new Runnable(action));
 
-        public   IAsyncChain Link(Action<object> action, object state) =>   Link(new StateRunnable(action, state));
+        public IAsyncChain Link(Action<object> action, object state) => Link(new StateRunnable(action, state));
 
-        public   IAsyncChain Link(Action<object, object> action, object context, object state) =>   Link(new StateWithContextRunnable(action, context, state));
+        public IAsyncChain Link(Action<object, object> action, object context, object state) => Link(new StateWithContextRunnable(action, context, state));
 
-        public   IAsyncChain Link(IRunnable runnable, TimeSpan delay)
+        public IAsyncChain Link(IRunnable runnable, TimeSpan delay)
         {
             if (ExecutorQueue.IsShutdown ||
                    ExecutorQueue.IsShuttingDown
@@ -64,14 +64,14 @@ namespace Phyah.Chain
             return this;
         }
 
-        public   IAsyncChain Link(Action action, TimeSpan delay) =>   Link(new Runnable(action),delay);
+        public IAsyncChain Link(Action action, TimeSpan delay) => Link(new Runnable(action), delay);
 
-        public   IAsyncChain Link(Action<object> action, object state, TimeSpan delay) =>   Link(new StateRunnable(action, state),delay);
+        public IAsyncChain Link(Action<object> action, object state, TimeSpan delay) => Link(new StateRunnable(action, state), delay);
 
-        public   IAsyncChain Link(Action<object, object> action, object context, object state, TimeSpan delay) =>   Link(new StateWithContextRunnable(action, context, state),delay);
+        public IAsyncChain Link(Action<object, object> action, object context, object state, TimeSpan delay) => Link(new StateWithContextRunnable(action, context, state), delay);
 
-       
-        public   IAsyncChain Link(Action action, TimeSpan delay, CancellationToken cancellationToken)
+
+        public IAsyncChain Link(Action action, TimeSpan delay, CancellationToken cancellationToken)
         {
             if (ExecutorQueue.IsShutdown ||
                    ExecutorQueue.IsShuttingDown
@@ -84,7 +84,7 @@ namespace Phyah.Chain
             return this;
         }
 
-        public   IAsyncChain Link(Action<object> action, object state,  CancellationToken cancellationToken)
+        public IAsyncChain Link(Action<object> action, object state, CancellationToken cancellationToken)
         {
             if (ExecutorQueue.IsShutdown ||
                    ExecutorQueue.IsShuttingDown
@@ -94,10 +94,10 @@ namespace Phyah.Chain
             {
                 throw new ChainCancelException();
             }
-            ExecutorQueue.ScheduleAsync(action,state, TimeSpan.Zero, cancellationToken);
+            ExecutorQueue.ScheduleAsync(action, state, TimeSpan.Zero, cancellationToken);
             return this;
         }
-        public   IAsyncChain Link(Action<object, object> action, object context, object state, CancellationToken cancellationToken)
+        public IAsyncChain Link(Action<object, object> action, object context, object state, CancellationToken cancellationToken)
         {
             if (ExecutorQueue.IsShutdown ||
                    ExecutorQueue.IsShuttingDown
@@ -107,12 +107,12 @@ namespace Phyah.Chain
             {
                 throw new ChainCancelException();
             }
-            ExecutorQueue.ScheduleAsync(action,context,state, TimeSpan.Zero, cancellationToken);
+            ExecutorQueue.ScheduleAsync(action, context, state, TimeSpan.Zero, cancellationToken);
             return this;
         }
-        
 
-        public   IAsyncChain Link(Action action, CancellationToken cancellationToken, TimeSpan delay)
+
+        public IAsyncChain Link(Action action, CancellationToken cancellationToken, TimeSpan delay)
         {
             if (ExecutorQueue.IsShutdown ||
                    ExecutorQueue.IsShuttingDown
@@ -125,7 +125,7 @@ namespace Phyah.Chain
             return this;
         }
 
-        public   IAsyncChain Link(Action<object> action, object state, CancellationToken cancellationToken, TimeSpan delay)
+        public IAsyncChain Link(Action<object> action, object state, CancellationToken cancellationToken, TimeSpan delay)
         {
             if (ExecutorQueue.IsShutdown ||
                    ExecutorQueue.IsShuttingDown
@@ -138,7 +138,7 @@ namespace Phyah.Chain
             return this;
         }
 
-        public   IAsyncChain Link(Action<object, object> action, object context, object state, CancellationToken cancellationToken, TimeSpan delay)
+        public IAsyncChain Link(Action<object, object> action, object context, object state, CancellationToken cancellationToken, TimeSpan delay)
         {
             if (ExecutorQueue.IsShutdown ||
                    ExecutorQueue.IsShuttingDown
@@ -147,11 +147,11 @@ namespace Phyah.Chain
             {
                 throw new ChainCancelException();
             }
-            ExecutorQueue.ScheduleAsync(action,context, state, delay, cancellationToken);
+            ExecutorQueue.ScheduleAsync(action, context, state, delay, cancellationToken);
             return this;
         }
 
-        public   IAsyncChain Link(Action action, CancellationToken cancellationToken)
+        public IAsyncChain Link(Action action, CancellationToken cancellationToken)
         {
             if (ExecutorQueue.IsShutdown ||
                       ExecutorQueue.IsShuttingDown
@@ -160,7 +160,7 @@ namespace Phyah.Chain
             {
                 throw new ChainCancelException();
             }
-            ExecutorQueue.ScheduleAsync(action,TimeSpan.Zero, cancellationToken);
+            ExecutorQueue.ScheduleAsync(action, TimeSpan.Zero, cancellationToken);
             return this;
         }
 
@@ -207,7 +207,7 @@ namespace Phyah.Chain
                     return;
                 }
                 Interlocked.Exchange(ref IsCanceled, CANCELED);
-                this.ExecutorQueue.ShutdownGracefullyAsync(TimeSpan.Zero,TimeSpan.Zero);
+                this.ExecutorQueue.ShutdownGracefullyAsync(TimeSpan.Zero, TimeSpan.Zero).Wait();
                 Dispose();
 
             });
@@ -215,7 +215,7 @@ namespace Phyah.Chain
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; 
+        private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
         {
