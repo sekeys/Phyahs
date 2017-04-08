@@ -2,16 +2,18 @@
 
 namespace Phyah.EventHub
 {
-    using Phyah.Collection;
     using System;
-    using System.Collections.Generic;
     using System.Collections.Concurrent;
-    using System.Reflection;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
 
-    public class DefaultReceptorStore : IReceptorStore
+    public class PriorityReceptorStore : IReceptorStore
     {
-        public ConcurrentDictionary<string, IEnumerable<IReceptor>> Dictionary = new ConcurrentDictionary<string, IEnumerable<IReceptor>>();
+        public ConcurrentDictionary<string, IEnumerable<IReceptor>> Dictionary;
+        public PriorityReceptorStore()
+        {
+        }
 
         public IEnumerable<IReceptor> Match(string name)
         {
@@ -29,7 +31,7 @@ namespace Phyah.EventHub
             {
                 Dictionary.TryGetValue(name, out receps);
             }
-            return receps.Where(m =>type.IsAssignableFrom(m.GetType())) ;
+            return receps.Where(m => type.IsAssignableFrom(m.GetType()));
         }
 
         public IEnumerable<IReceptor> Match<T>() where T : IReceptor
@@ -71,10 +73,10 @@ namespace Phyah.EventHub
             IEnumerable<IReceptor> receps;
             if (Dictionary.ContainsKey(name))
             {
-                Dictionary.TryRemove(name,out receps);
+                Dictionary.TryRemove(name, out receps);
             }
         }
-        public void Unstore(string name,IReceptor receptor)
+        public void Unstore(string name, IReceptor receptor)
         {
             IEnumerable<IReceptor> receps;
             if (Dictionary.ContainsKey(name))

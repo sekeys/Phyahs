@@ -9,7 +9,7 @@ namespace Phyah.EventHub
 
     public class SequeueEventHub : EventHub
     {
-        public SequeueEventHub() : base(new IndependentThreadExecutor(), store)
+        public SequeueEventHub() : base(new IndependentThreadExecutor("IndependentThreadExecutor Hub", TimeSpan.Zero), new DefaultReceptorStore())
         {
         }
     }

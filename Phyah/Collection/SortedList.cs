@@ -1,19 +1,17 @@
-﻿
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+
 namespace Phyah.Collection
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-
-    public class PriorityQueue<T> : IQueue<T>,IEnumerable<T>
-        where T : class
+    public class SortedList<T> : IList<T>, IEnumerable<T>,  IClonable<SortedList<T>>
     {
         readonly IComparer<T> comparer;
         int count;
         int capacity;
         T[] items;
-
-        public PriorityQueue(IComparer<T> comparer)
+        public SortedList(IComparer<T> comparer)
         {
             Require.NotNull(comparer);
 
@@ -22,21 +20,39 @@ namespace Phyah.Collection
             this.items = new T[this.capacity];
         }
 
-        public PriorityQueue()
+        public SortedList()
             : this(Comparer<T>.Default)
         {
         }
-
+        public T this[int index]
+        {
+            get
+            {
+                if (index >= items.Length)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                return items[index];
+            }
+            set
+            {
+                if (index >= capacity)
+                {
+                    GrowHeap();
+                }
+                items[index]=value;
+            }
+        }
         public int Count => this.count;
 
-        public bool IsEmpty => this.count==0;
+        public bool IsEmpty => this.count == 0;
 
         public T Dequeue()
         {
             T result = this.Peek();
             if (result == null)
             {
-                return null;
+                return default(T);
             }
 
             int newCount = --this.count;
@@ -49,8 +65,6 @@ namespace Phyah.Collection
 
             return result;
         }
-
-        public T Peek() => this.count == 0 ? null : this.items[0];
 
         public void Enqueue(T item)
         {
@@ -83,7 +97,7 @@ namespace Phyah.Collection
                 T last = this.items[this.count];
                 this.items[this.count] = default(T);
                 this.TrickleDown(index, last);
-                if (this.items[index] == last)
+                if (this.items[index].Equals(last))
                 {
                     this.BubbleUp(index, last);
                 }
@@ -147,8 +161,7 @@ namespace Phyah.Collection
                 yield return this.items[i];
             }
         }
-
-        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+        
 
         public void Clear()
         {
@@ -156,12 +169,72 @@ namespace Phyah.Collection
             Array.Clear(this.items, 0, 0);
         }
 
-        public IQueue<T> Clone()
+        public bool IsReadOnly => false;
+
+
+        public void Add(T item)
         {
-            PriorityQueue<T> pq = new PriorityQueue<T>(comparer);
-            pq.items = this.items;
-            pq.capacity = this.capacity;
-            return pq;
+            BubbleUp(0,item);
+        }
+        
+
+
+        public bool Contains(T item)
+        {
+            foreach(var jtem in items)
+            {
+                if (item.Equals(jtem))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            Array.Copy(items, array, arrayIndex);
+        }
+        bool Disposing = false;
+        public void Dispose()
+        {
+            if (!Disposing)
+            {
+                GC.Collect();
+            }
+        }
+        
+
+        public int IndexOf(T item)
+        {
+            return Array.IndexOf(items, item);
+        }
+
+        public void Insert(int index, T item)
+        {
+            BubbleUp(index, item);
+        }
+
+        public bool MoveNext()
+        {
+            throw new NotImplementedException();
+        }
+        
+
+        public void RemoveAt(int index)
+        {
+            Remove(items[index]);
+        }
+        
+
+        SortedList<T> IClonable<SortedList<T>>.Clone()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
         }
     }
 }

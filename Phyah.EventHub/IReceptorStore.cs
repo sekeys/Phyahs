@@ -10,7 +10,8 @@ namespace Phyah.EventHub
         void Store(IReceptor receptor);
         IEnumerable<IReceptor> Match(string name);
         IEnumerable<IReceptor> Match<T>() where T : IReceptor;
-        
 
+        void Unstore(string name);
+        void Unstore(string name, IReceptor receptor);
     }
 }

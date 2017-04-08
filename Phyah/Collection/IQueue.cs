@@ -18,5 +18,6 @@ namespace Phyah.Collection
 
         void Clear();
 
+        IQueue<T> Clone();
     }
 }
