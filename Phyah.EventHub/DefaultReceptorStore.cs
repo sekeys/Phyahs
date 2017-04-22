@@ -50,7 +50,7 @@ namespace Phyah.EventHub
             }
             else
             {
-                IQueue<IReceptor> queue = new Queue<IReceptor>();
+                IQueue<IReceptor> queue = new StoreQueue<IReceptor>();
                 queue.Enqueue(receptor);
                 Dictionary.TryAdd(name, queue);
             }

@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="assets\Zonic.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\css\behind\bootstrap.css" />
+    <Content Include="wwwroot\css\behind\font-awesome.min.css" />
+    <Content Include="wwwroot\css\behind\font-icon.css" />
+    <Content Include="wwwroot\css\behind\fonts\2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2" />
+    <Content Include="wwwroot\css\behind\fonts\CWB0XYA8bzo0kSThX0UTuA.woff2" />
+    <Content Include="wwwroot\css\behind\fonts\fontawesome-webfont.woff2" />
+    <Content Include="wwwroot\css\behind\fonts\Hgo13k-tfSpn0qi1SFdUfVtXRa8TVwTICgirnJhmVJw.woff2" />
+    <Content Include="wwwroot\css\behind\fonts\roboto.woff2" />
+    <Content Include="wwwroot\css\behind\side.css" />
+    <Content Include="wwwroot\css\index.css" />
+    <Content Include="wwwroot\js\Zonic.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.1" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="7.0.7-m61" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="System.AppDomain" Version="2.0.11" />
+    <PackageReference Include="System.Reflection" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
+    <PackageReference Include="MongoDB.Bson" Version="2.4.3" />
+    <PackageReference Include="MongoDB.Driver" Version="2.4.3" />
+    <PackageReference Include="MongoDB.Driver.Core" Version="2.4.3" />
+    <PackageReference Include="MySql.Data" Version="7.0.7-m61" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Phyah.Web\Phyah.Web.csproj" />
+    <ProjectReference Include="..\Phyah\Phyah.csproj" />
+  </ItemGroup>
+
+</Project>

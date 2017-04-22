@@ -5,8 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Concurrency\StatePipeline.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Helper\" />
     <Folder Include="Security\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Diagnostics.Contracts" Version="4.3.0" />
   </ItemGroup>
 
 </Project>
