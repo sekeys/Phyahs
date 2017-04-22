@@ -65,8 +65,7 @@ namespace Phyah.Huaxue
                 {
                     Id = Request.Form["id"],
                     Nick = Request.Form["nick"],
-                    Password = Request.Form["pwd"],
-                    UserName = Request.Form["name"]
+                    Password = Request.Form["pwd"]
                 });
             }
             catch (Exception ex)
