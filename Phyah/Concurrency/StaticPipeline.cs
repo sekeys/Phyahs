@@ -31,6 +31,7 @@ namespace Phyah.Concurrency
                     }
                 }
                 return executor;
+                //return null;
             }
         }
         public StaticPipeline(Action completed, Action cancel, Action<Exception> exception)
@@ -56,13 +57,53 @@ namespace Phyah.Concurrency
             {
                 AccessorContext.DefaultContext.Set<TaskCompletionSource>(TERMINATIONCOMPLETIONSOURCENAME, term);
                 State = PipelineState.Running;
-                base.StartCore();
+                this.StartCore(DefaultExecutor);
             }
             catch (Exception ex)
             {
                 term.SetException(ex);
             }
         }
+
+        public override void Next(IHandlerContext context)
+        {
+            try
+            {
+                lock (this)
+                {
+                    if (PipelineState.Running == State
+                        || PipelineState.Unstarted == State
+                        )
+                    {
+                        if (DefaultExecutor.InLoop)
+                        {
+                            var handler = context.Next();
+                            if (handler == null)
+                                Completed();
+                            handler.Handle(DefaultExecutor);
+                        }
+                        else
+                        {
+                            DefaultExecutor.Execute(() =>
+                            {
+                                var handler = context.Next();
+                                if (handler == null)
+                                    Completed();
+                                handler.Handle(DefaultExecutor);
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionCaught(ex);
+            }
+        }
+        //protected override void StartCore()
+        //{
+
+        //}
         public override PipelineState State
         {
             get => AccessorContext.DefaultContext.Get<PipelineState>();
@@ -80,10 +121,16 @@ namespace Phyah.Concurrency
         {
             State = PipelineState.Completed;
             OnCompleted();
-            //DefaultExecutor.ShutdownGracefullyAsync().Wait();
+
             TerminationCompletionSource.Complete();
         }
-
+        public override void Wait()
+        {
+            var executor = DefaultExecutor;
+            executor.ShutdownGracefullyAsync(TimeSpan.Zero, TimeSpan.Zero).Wait();
+            TerminationCompletionSource.Task.Wait();
+            AccessorContext.DefaultContext.Set<IExecutor>(STATICPIPELINEDEFAULTEXECUTOR, null);
+        }
         public override void Cancel()
         {
             State = PipelineState.Canceled;

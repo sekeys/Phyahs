@@ -1,4 +1,6 @@
-﻿using Phyah.Web;
+﻿using Microsoft.AspNetCore.Http;
+using Phyah.Configuration;
+using Phyah.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +14,10 @@ namespace Phyah.Huaxue
 
         public async override Task Invoke()
         {
-            await HtmlFile(@"E:\DevSource\Phyah\Phyah.Huaxue\Behind\dashbord.html");
+            
+
+            string content = System.IO.File.ReadAllText($@"{AppSetting.AppSettings["hostdir"]}\Behind\dashbord.html");
+            await HttpContext.Response.WriteAsync(content);
             //HttpContext.Response.
         }
     }

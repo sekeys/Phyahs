@@ -66,6 +66,38 @@ namespace Phyah.Concurrency
             {
                 return Nxt;
             }
+
+            protected override void HandleCore(IExecutor executor)
+            {
+                if (executor == null) { HandleCore(); }
+                if (executor == null || executor.InLoop)
+                {
+                    try
+                    {
+                        Handler.Handle();
+                        Completed();
+                    }
+                    catch (Exception ex)
+                    {
+                        ExceptionCaught(ex);
+                    }
+                }
+                else
+                {
+                    executor.Execute(() =>
+                    {
+                        try
+                        {
+                            Handler.Handle();
+                            Completed();
+                        }
+                        catch (Exception ex)
+                        {
+                            ExceptionCaught(ex);
+                        }
+                    });
+                }
+            }
         }
 
         internal class HeadContext : HandlerContext
@@ -152,7 +184,7 @@ namespace Phyah.Concurrency
             tail = new TailContext(DefaultExecutor, this);
             this.head.Nxt = this.tail;
             this.tail.Prev = this.head;
-            _DefaultExecutor = new IndependentThreadExecutor_out(null);
+            _DefaultExecutor = new IndependentThreadExecutor(null, "IndependentThreadExecutor Worker", TimeSpan.Zero);
             //new AccessorContext(ACCESSORCONTEXTSTORAGENAME);//生成线程存储空间
         }
         HandlerContext NewContext(string name, IHandler handler)
@@ -537,6 +569,10 @@ namespace Phyah.Concurrency
         {
             this.head.Handle();
         }
+        protected void StartCore(IExecutor executor)
+        {
+            this.head.Handle(executor);
+        }
         public virtual void Start()
         {
             try
@@ -559,7 +595,7 @@ namespace Phyah.Concurrency
             this.State = PipelineState.Completed;
             TerminationCompletionSource.Complete();
         }
-        public void Wait()
+        public virtual void Wait()
         {
             TerminationCompletionSource.Task.Wait();
         }

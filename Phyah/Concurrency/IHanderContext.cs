@@ -14,7 +14,7 @@ namespace Phyah.Concurrency
         IPipeline Pipeline { get; }
         IHandlerContext Next();
         void Handle();
-
+        void Handle(IExecutor executor);
         void Completed();
 
         void ExceptionCaught(Exception ex);

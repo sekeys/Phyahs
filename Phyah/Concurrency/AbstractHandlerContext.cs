@@ -90,6 +90,7 @@ namespace Phyah.Concurrency
             }
         }
         protected abstract void HandleCore();
+        protected abstract void HandleCore(IExecutor executor);
 
         public virtual void ExceptionCaught(Exception ex)
         {
@@ -135,5 +136,26 @@ namespace Phyah.Concurrency
         }
 
         public abstract IHandlerContext Next();
+
+        public void Handle(IExecutor executor)
+        {
+            //if (this.pipeline.State == PipelineState.Running)
+            //{
+                try
+                {
+                    HandleCore(executor);
+                    //Handler.Handle();
+                    //Completed();
+                }
+                catch (Exception ex)
+                {
+                    ExceptionCaught(ex);
+                }
+            //}
+            //else
+            //{
+                throw new Exception("该Handler出现在意外位置，关联Pipeline并已关闭执行");
+            //}
+        }
     }
 }

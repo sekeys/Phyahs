@@ -3,6 +3,7 @@
 namespace Phyah.Huaxue
 {
     using Microsoft.AspNetCore.Http;
+    using Phyah.Configuration;
     using Phyah.Web;
     using System;
     using System.Collections.Generic;
@@ -12,10 +13,12 @@ namespace Phyah.Huaxue
     {
         public override string Text => "Index";
 
-        public async override Task Invoke()
+        public  override Task Invoke()
         {
-            //await HttpContext.Response.WriteAsync(System.IO.File.ReadAllText(@"E:\DevSource\Phyah\Phyah.Huaxue\index.html"));
-            await HtmlFile(@"E:\DevSource\Phyah\Phyah.Huaxue\index.html");
+            
+            string content= System.IO.File.ReadAllText($@"{AppSetting.AppSettings["hostdir"]}\index.html");
+            return HttpContext.Response.WriteAsync(content);
+            
             //HttpContext.Response.
         }
     }

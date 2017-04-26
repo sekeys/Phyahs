@@ -54,7 +54,7 @@ namespace Phyah.Web
         }
         protected async Task Html(string html) => await Content(html, "text/html");
 
-        protected async Task HtmlFile(string path) => await File(path, "text/html");
+        protected async Task HtmlFile(string path) => await Content(System.IO.File.ReadAllText(path), "text/html");
         //protected async Task File()
         //{
 

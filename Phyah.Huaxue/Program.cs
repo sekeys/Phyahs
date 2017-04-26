@@ -18,6 +18,7 @@ namespace Phyah.Huaxue
                 .UseStartup<Startup>()
                 //.UseApplicationInsights()
                 .Build();
+            
             host.Run();
         }
     }

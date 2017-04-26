@@ -64,6 +64,8 @@ namespace Phyah.Huaxue
                 .AddLast(new InitializedHandler())
                 .AddLast(new ProcessHandler())
                 );
+            //Accessor<IExecutor>.Current = null;
+            AccessorContext.Reset();
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(IndexBehavior));
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(DashbordBehavior));
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(UserBehavior));

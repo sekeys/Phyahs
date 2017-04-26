@@ -20,7 +20,7 @@ namespace Phyah.Huaxue
         {
             try
             {
-                await Json(Service.FindAll());
+                await Json(Service.FindAll().Select(m => new { Id = m.Id, UserName = m.UserName, Nick = m.UserName }));
             }
             catch (Exception ex)
             {
@@ -49,7 +49,7 @@ namespace Phyah.Huaxue
             try
             {
                 await Json((from item in Service.Context.Set<Users>()
-                            where item.Id==Request.Query["id"]
+                            where item.Id == Request.Query["id"]
                             select item).FirstOrDefault());
             }
             catch (Exception ex)
