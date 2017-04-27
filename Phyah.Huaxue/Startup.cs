@@ -55,17 +55,24 @@ namespace Phyah.Huaxue
             Phyah.Configuration.ConfigurationManager.Manager.Configure();
             Phyah.Web.Initialization.Initialize();
             Phyah.Web.Initialization.InitializePipeline(new StaticPipeline(
-                () => { },
-                () => { },
+                () => {
+                    //var resp = AccessorContext.DefaultContext.Get<HttpContext>().Response;
+                    //resp.StatusCode= 500;
+                    //AccessorContext.DefaultContext.Get<HttpContext>().Response.WriteAsync("ex.ToString()");
+                },
+                () => {
+                    //AccessorContext.DefaultContext.Get<HttpContext>().Response.WriteAsync("ex.ToString()");
+                },
                 (ex) =>
                 {
-                    AccessorContext.DefaultContext.Get<HttpContext>().Response.WriteAsync(ex.ToString());
+                    var resp=AccessorContext.DefaultContext.Get<HttpContext>().Response;
+                    resp.Clear();
+                    resp.WriteAsync(ex.ToString());
+                    
                 })
                 .AddLast(new InitializedHandler())
                 .AddLast(new ProcessHandler())
                 );
-            //Accessor<IExecutor>.Current = null;
-            AccessorContext.Reset();
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(IndexBehavior));
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(DashbordBehavior));
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(UserBehavior));

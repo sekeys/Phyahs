@@ -56,6 +56,7 @@ namespace Phyah.Web
         
         public bool Next()
         {
+            if (Current == null) { return false; }
             Current = Current.Next;
             return Current != null;
         }

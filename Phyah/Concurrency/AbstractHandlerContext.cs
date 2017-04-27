@@ -139,8 +139,8 @@ namespace Phyah.Concurrency
 
         public void Handle(IExecutor executor)
         {
-            //if (this.pipeline.State == PipelineState.Running)
-            //{
+            if (this.pipeline.State == PipelineState.Running)
+            {
                 try
                 {
                     HandleCore(executor);
@@ -151,11 +151,11 @@ namespace Phyah.Concurrency
                 {
                     ExceptionCaught(ex);
                 }
-            //}
-            //else
-            //{
+            }
+            else
+            {
                 throw new Exception("该Handler出现在意外位置，关联Pipeline并已关闭执行");
-            //}
+            }
         }
     }
 }

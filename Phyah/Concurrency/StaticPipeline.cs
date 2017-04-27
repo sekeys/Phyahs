@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Phyah.Concurrency
 {
     public class StaticPipeline : AbstractPipeline
     {
+        class PipelineScopeValue
+        {
+            public TaskCompletionSource TaskCompletionSource { get; set; }
+            public PipelineState State { get; set; }
+        }
         readonly Action<Exception> OnException;
         readonly Action OnCompleted;
         readonly Action OnCancel;
@@ -17,21 +23,45 @@ namespace Phyah.Concurrency
         //});
 
         static object Locker = new object();
+        public static Func<bool> Filter { get; set; } = () =>
+        {
+            return Thread.CurrentThread.Name != null && Thread.CurrentThread.Name.IndexOf("Master", StringComparison.OrdinalIgnoreCase) > 0;
+        };
         protected override IExecutor DefaultExecutor
         {
             get
             {
-                var executor = AccessorContext.DefaultContext.Get<IExecutor>(STATICPIPELINEDEFAULTEXECUTOR);
+                if (Filter()) { return null; }
+                var executor = Accessor<IExecutor>.Current; //AccessorContext.DefaultContext.Get<IExecutor>(STATICPIPELINEDEFAULTEXECUTOR);
                 if (executor == null)
                 {
                     lock (this)
                     {
                         executor = ExecutorFactory();
-                        AccessorContext.DefaultContext.Set<IExecutor>(STATICPIPELINEDEFAULTEXECUTOR, executor);
+                        Accessor<IExecutor>.Current = executor;//AccessorContext.DefaultContext.Set<IExecutor>(STATICPIPELINEDEFAULTEXECUTOR, executor);
                     }
                 }
                 return executor;
                 //return null;
+            }
+        }
+        private PipelineScopeValue ScopeValue
+        {
+            get
+            {
+                var value = Accessor<PipelineScopeValue>.Current; //AccessorContext.DefaultContext.Get<IExecutor>(STATICPIPELINEDEFAULTEXECUTOR);
+                if (value == null)
+                {
+                    lock (this)
+                    {
+                        value = new PipelineScopeValue()
+                        {
+                            State = PipelineState.Unstarted
+                        };
+                        Accessor<PipelineScopeValue>.Current = value;//AccessorContext.DefaultContext.Set<IExecutor>(STATICPIPELINEDEFAULTEXECUTOR, executor);
+                    }
+                }
+                return value;
             }
         }
         public StaticPipeline(Action completed, Action cancel, Action<Exception> exception)
@@ -42,10 +72,6 @@ namespace Phyah.Concurrency
         }
         public override void ExceptionCaught(Exception ex)
         {
-            //System.Threading.Tasks.Task.Run(() =>
-            //{
-            //    DefaultExecutor.ShutdownGracefullyAsync().Wait();
-            //});
             State = PipelineState.Exception;
             OnException(ex);
             TerminationCompletionSource.TrySetException(ex);
@@ -55,7 +81,8 @@ namespace Phyah.Concurrency
             var term = new TaskCompletionSource();
             try
             {
-                AccessorContext.DefaultContext.Set<TaskCompletionSource>(TERMINATIONCOMPLETIONSOURCENAME, term);
+                //AccessorContext.DefaultContext.Set<TaskCompletionSource>(TERMINATIONCOMPLETIONSOURCENAME, term);
+                ScopeValue.TaskCompletionSource = term;
                 State = PipelineState.Running;
                 this.StartCore(DefaultExecutor);
             }
@@ -78,8 +105,13 @@ namespace Phyah.Concurrency
                         if (DefaultExecutor.InLoop)
                         {
                             var handler = context.Next();
-                            if (handler == null)
+
+                            var pipelineState = PipelineState;
+                            if (handler == null && !(pipelineState == PipelineState.Canceled || pipelineState == PipelineState.Completed || pipelineState == PipelineState.Exception))
+                            {
                                 Completed();
+                                return;
+                            }
                             handler.Handle(DefaultExecutor);
                         }
                         else
@@ -87,8 +119,12 @@ namespace Phyah.Concurrency
                             DefaultExecutor.Execute(() =>
                             {
                                 var handler = context.Next();
-                                if (handler == null)
+                                var pipelineState = PipelineState;
+                                if (handler == null && !(pipelineState == PipelineState.Canceled || pipelineState == PipelineState.Completed || pipelineState == PipelineState.Exception))
+                                {
                                     Completed();
+                                    return;
+                                }
                                 handler.Handle(DefaultExecutor);
                             });
                         }
@@ -106,22 +142,22 @@ namespace Phyah.Concurrency
         //}
         public override PipelineState State
         {
-            get => AccessorContext.DefaultContext.Get<PipelineState>();
-            protected set => AccessorContext.DefaultContext.Set<PipelineState>(value);
+            get => ScopeValue.State;//AccessorContext.DefaultContext.Get<PipelineState>();
+            protected set => ScopeValue.State = value;//AccessorContext.DefaultContext.Set<PipelineState>(value);
         }
 
-        readonly string TERMINATIONCOMPLETIONSOURCENAME = "STATICPIPELINE.TERMINATIONCOMPLETIONSOURCE";
+        //readonly string TERMINATIONCOMPLETIONSOURCENAME = "STATICPIPELINE.TERMINATIONCOMPLETIONSOURCE";
         protected override TaskCompletionSource TerminationCompletionSource
         {
 
-            get => AccessorContext.DefaultContext.Get<TaskCompletionSource>(TERMINATIONCOMPLETIONSOURCENAME);
+            get => ScopeValue.TaskCompletionSource; //AccessorContext.DefaultContext.Get<TaskCompletionSource>(TERMINATIONCOMPLETIONSOURCENAME);
+
 
         }
         public override void Completed()
         {
             State = PipelineState.Completed;
             OnCompleted();
-
             TerminationCompletionSource.Complete();
         }
         public override void Wait()
@@ -129,13 +165,12 @@ namespace Phyah.Concurrency
             var executor = DefaultExecutor;
             executor.ShutdownGracefullyAsync(TimeSpan.Zero, TimeSpan.Zero).Wait();
             TerminationCompletionSource.Task.Wait();
-            AccessorContext.DefaultContext.Set<IExecutor>(STATICPIPELINEDEFAULTEXECUTOR, null);
+            //AccessorContext.DefaultContext.Set<IExecutor>(STATICPIPELINEDEFAULTEXECUTOR, null);
         }
         public override void Cancel()
         {
             State = PipelineState.Canceled;
             OnCancel();
-            //DefaultExecutor.ShutdownGracefullyAsync().Wait();
             TerminationCompletionSource.SetCanceled();
         }
 
@@ -149,8 +184,8 @@ namespace Phyah.Concurrency
         }
         public static PipelineState PipelineState
         {
-            get => AccessorContext.DefaultContext.Get<PipelineState>();
-            protected set => AccessorContext.DefaultContext.Set<PipelineState>(value);
+            get => Accessor<PipelineScopeValue>.Current.State;//AccessorContext.DefaultContext.Get<PipelineState>();
+            protected set => Accessor<PipelineScopeValue>.Current.State = value;//AccessorContext.DefaultContext.Set<PipelineState>(value);
         }
         public static void Register(IPipeline pipeline)
         {

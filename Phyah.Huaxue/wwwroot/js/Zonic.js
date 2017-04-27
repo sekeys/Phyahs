@@ -298,6 +298,7 @@
         }
         return this;
     }
+    base.element = element;
     function selectionMatchs(n, s) {
         var obj = document.createElement("div"), selectMatcher = obj["matches"] || obj[temp_vendorSymbolFunc(obj, "matchesSelector")], selectMatches = function (n, s) {
             return selectMatcher.call(n, s);
@@ -660,6 +661,12 @@
         if (html != null) {
             this.call(function (d) {
                 this.innerHTML = html;
+                var items = this.getElementsByTagName("script");
+                if (items.length) {
+                    for (var i = 0; i < items.length; i++) {
+                        if (items[i].innerHTML) { eval(items[i].innerHTML); }
+                    };
+                }
             }, pos);
             return this;
         }
@@ -957,8 +964,14 @@
         } else {
             return document.createElement(tag);
         }
+        //var items = obj.getElementsByTagName("script");
+        //if (items.length) {
+        //    for (var i = 0; i < items.length; i++) {
+        //        if (items[0].innerHTML) { eval(items[0].innerHTML); }
+        //    };
+        //}
         return obj.children[0];
-    };
+    }
     element.next = function (d) {
         var r = d, rs = [];
         while ((r = r.nextSibling) != null) {
@@ -1102,6 +1115,12 @@
             return value === null ? name.local ? attrNullNS : attrNull : typeof value === "function" ? name.local ? attrFunctionNS : attrFunction : name.local ? attrConstantNS : attrConstant;
         }
     };
+    element.prototype.removeAttr = function (name) {
+       
+        return this.each(function () {
+            this.removeAttribute(name);
+        });
+    }
     element.scrollTop = function () {
         var scrollPos;
         if (window.pageYOffset) {
@@ -3044,7 +3063,7 @@
                     try {
                         var param = /xml/.test(me._mimeType) ? me.request : /json/.test(me._mimeType) ? me.request : me.request.responseText;
                         me.emit("success", param, me.request);
-
+                        result = param;
                         resolve(param);
                     } catch (e) {
                         me.emit("error", e);
@@ -3055,6 +3074,10 @@
                     me.emit("load", result);
                 } else {
                     me.emit("load", me.request);
+                    result = me.request;
+                }
+                if (callback instanceof Function) {
+                    callback(result);
                 }
             });
         }
@@ -3156,9 +3179,8 @@
     base.ajax = function (url, method, data, callback, mimeType) {
         if (typeof mimeType === "undefined") { mimeType = "text/html"; }
         if (typeof callback === "function") {
-            var xhr = new xhr(url, mimeType, function (json) {
-                callback.call(this, json, xhr);
-            });
+            var xhr = new base.xhr(url, mimeType, null);
+            xhr.on("success", callback);
             if (method && "get" == method.toLowerCase()) {
                 return xhr.get(data);
             } else if (method && "post" == method.toLowerCase()) {
@@ -3242,7 +3264,7 @@
         }
         console.error("can't load the script by js dynamic");
     };
-    window.zonic = function (arg1, args2) {
+    window.zonic = function (arg1, arg2) {
         if (!arguments.length) { return this; }
         if (typeof arg1 === "string") {
             if (base.isURL(arg1)) {
@@ -3252,12 +3274,39 @@
                     base.loadScript(arg1.slice(7), resolve, reject);
                 });
             } else {
-                return new element(arg1, arg2);
+                return new base.element(arg1, arg2);
             }
+        } else if (arg1 instanceof Element) {
+            return new base.element(arg1, arg2);
         }
         else if (base.isFunction(arg1)) {
             return arg1.apply(this, base.slice(arguments));
         }
+    }
+    zonic.parseHtml = element.parseHtml;
+    zonic.require = function (url, callback) {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        if (script.readyState) { // IE
+            script.onreadystatechange = function () {
+                if (script.readyState == "loaded" || script.readyState == "complete") {
+                    script.onreadystatechange = null;
+                    callback();
+                }
+            };
+        } else { // FF, Chrome, Opera, ...
+            script.onload = function () {
+                callback();
+            };
+        }
+        script.src = url;
+        document.getElementsByTagName("head")[0].appendChild(script);
+    }
+    zonic.evalScript = function (scriptText) {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.text = scriptText;
+        document.body.appendChild(script);
     }
     base.clone.call(zonic, base);
     function ui(exp, context) {
@@ -3334,7 +3383,11 @@
         }
         u.css({ top: "0px", left: "0px", opacity: "0", "background-color": conf.background || "#fff;", position: conf.position || "absolute;", "z-index": 10, width: conf.width || "40%", height: conf.height || "300px" }).addClass(conf.mode == "hover" ? "zonic-section-layer-hover" : (conf.mode == "mask" ? "zonic-section-mask" : "zonic-section-layer")).appendTo(element.select("body"));
         var r = u.getBoundingRect(), width = r.width, height = r.height;
-        if (conf.center) { window.setTimeout(function () { u.css({ opacity: 1, top: ((conf.top || window.screen.availHeight / 2) - height) + "px", left: ((conf.left || window.screen.availWidth / 2) - width / 1.5) + "px" }); }, 0); }
+        if (conf.center) {
+            window.setTimeout(function () {
+                u.css({ opacity: 1, top: ((conf.top || window.screen.availHeight / 2) - height) + "px", left: ((conf.left || window.screen.availWidth / 2) - width / 1.5) + "px" });
+            }, 0);
+        }
         else { window.setTimeout(function () { u.css({ opacity: 1 }); }, 0); }
         if (!base.hasProp(conf, "dragable") || conf.dragable) element.drag(u, u, 0.3);
         //emitter(u);
@@ -3885,7 +3938,7 @@
         }
         return u;
     }
-    
+
     zonic.ui = ui;
 
 })(window, undefined);

@@ -70,7 +70,7 @@ namespace Phyah.Concurrency
             protected override void HandleCore(IExecutor executor)
             {
                 if (executor == null) { HandleCore(); }
-                if (executor == null || executor.InLoop)
+                if (executor != null || executor.InLoop)
                 {
                     try
                     {
@@ -107,7 +107,7 @@ namespace Phyah.Concurrency
                 this.Handler = new ActionHandler(() =>
                 {
                     ((AbstractPipeline)pipeline).State = PipelineState.Running;
-                    this.Completed();
+                    
                 });
             }
             public override void Handle()
@@ -122,15 +122,12 @@ namespace Phyah.Concurrency
             {
                 this.Handler = new ActionHandler(() =>
                 {
-                    ((AbstractPipeline)pipeline).State = PipelineState.Completed;
-                    this.Completed();
+                    //((AbstractPipeline)pipeline).State = PipelineState.Completed;
+                    //this.Completed();
 
                 });
             }
-            public override void Completed()
-            {
-                ((AbstractPipeline)Pipeline).Completed();
-            }
+            
             public override void Handle()
             {
                 //this.Completed();

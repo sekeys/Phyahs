@@ -7,14 +7,15 @@ namespace Phyah.Web
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using System.Threading;
+
     public class Initialization
     {
         public static Phyah.Concurrency.IPipeline Pipeline { get; private set; }
         public static void Initialize()
         {
-            //Zonic.Process.ProcessorMappingFactory.Factory.Register(new DefaultProcessMapping());
+            Thread.CurrentThread.Name = "Phyah.Master";
             Phyah.Web.BehaviorFactory.Register(new DefaultBehaviorFactory());
-            //Zonic.Process.Processor.Instanc
         }
         public static void InitializePipeline(IPipeline pipeline)
         {
