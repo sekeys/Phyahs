@@ -1,6 +1,5 @@
 ﻿using Phyah.Extensions;
 using Phyah.Huaxue.Biz;
-using Phyah.Huaxue.Models;
 using Phyah.Web;
 using System;
 using System.Collections.Generic;
@@ -9,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Phyah.Huaxue
 {
-    public class CardsBehavior : RestBehavior
+    public class ModuleBehavior : RestBehavior
     {
-        readonly CardService Service;
-        public override string Text => "cards";
-        public CardsBehavior()
+        readonly Biz.ModuleService Service;
+        public override string Text => "modules";
+        public ModuleBehavior()
         {
-            Service = new CardService();
+            Service = new ModuleService();
         }
         public async Task Get()
         {
@@ -41,32 +40,15 @@ namespace Phyah.Huaxue
         {
             try
             {
-                Service.Add(new Models.Card()
+                Service.Add(new Models.Modules()
                 {
                     Id = Guid.NewGuid().ToString(),
                     Name = Request.Form["name"],
-                    CardNo = Request.Form["cardNo"],
+                    CreateTime = DateTime.Now,
                     Description = Request.Form["description"],
-                    Href = Request.Form["href"],
-                    ImageSource = Request.Form["imgsrc"],
-                    Data = Request.Form["data"],
-                    Remark = Request.Form["remark"],
-                    Title = Request.Form["title"]
+                    Html = Request.Form["html"]
                 });
                 await Json(new { result = true });
-            }
-            catch (Exception ex)
-            {
-                await Status(StatusCode.UNKNOWERROR, ex.Message);
-            }
-        }
-        public async Task Head()
-        {
-            try
-            {
-                await Json((from item in Service.Context.Set<CardInfoes>()
-                            where item.Id == Request.Query["id"]
-                            select item).FirstOrDefault());
             }
             catch (Exception ex)
             {
@@ -77,19 +59,14 @@ namespace Phyah.Huaxue
         {
             try
             {
-                Service.Update(new Models.Card()
+                Service.Update(new Models.Modules()
                 {
                     Id = Request.Form["id"],
                     Name = Request.Form["name"],
-                    CardNo = Request.Form["cardNo"],
                     Description = Request.Form["description"],
-                    Href = Request.Form["href"],
-                    ImageSource = Request.Form["imgsrc"],
-                    Data = Request.Form["data"],
-                    Remark = Request.Form["remark"],
-                    Title = Request.Form["title"]
+                    Html = Request.Form["html"]
                 });
-                await Json(new { result=true});
+                await Json(new { result = true });
             }
             catch (Exception ex)
             {

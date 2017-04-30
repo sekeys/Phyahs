@@ -3278,7 +3278,9 @@
             }
         } else if (arg1 instanceof Element) {
             return new base.element(arg1, arg2);
-        }
+        } else if (arg1 instanceof ui) {
+            return ui;
+        } 
         else if (base.isFunction(arg1)) {
             return arg1.apply(this, base.slice(arguments));
         }
@@ -3381,11 +3383,13 @@
         u.layout = function (css) {
             return u.css(css);
         }
-        u.css({ top: "0px", left: "0px", opacity: "0", "background-color": conf.background || "#fff;", position: conf.position || "absolute;", "z-index": 10, width: conf.width || "40%", height: conf.height || "300px" }).addClass(conf.mode == "hover" ? "zonic-section-layer-hover" : (conf.mode == "mask" ? "zonic-section-mask" : "zonic-section-layer")).appendTo(element.select("body"));
-        var r = u.getBoundingRect(), width = r.width, height = r.height;
+        u.css({ top: "0px", left: "0px", opacity: "0", "background-color": conf.background || "#fff;", position: conf.position || "absolute;", "z-index": 10, width: conf.width || "40%", height: conf.height || "300px" })
+            .addClass(conf.mode == "hover" ? "zonic-section-layer-hover" : (conf.mode == "mask" ? "zonic-section-mask" : "zonic-section-layer")).appendTo(element.select("body"));
+        
         if (conf.center) {
             window.setTimeout(function () {
-                u.css({ opacity: 1, top: ((conf.top || window.screen.availHeight / 2) - height) + "px", left: ((conf.left || window.screen.availWidth / 2) - width / 1.5) + "px" });
+                var r = u.getBoundingRect(), width = r.width, height = r.height;
+                u.css({ opacity: 1, top: ((conf.top || window.screen.availHeight / 2) - height/2) + "px", left: ((conf.left || window.screen.availWidth / 2) - width / 1.5) + "px" });
             }, 0);
         }
         else { window.setTimeout(function () { u.css({ opacity: 1 }); }, 0); }

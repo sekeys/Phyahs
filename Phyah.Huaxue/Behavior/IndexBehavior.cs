@@ -33,15 +33,15 @@ namespace Phyah.Huaxue
             //HttpContext.Response.
         }
     }
-    public class CardBehavior : Behavior
-    {
-        public override string Text => "card";
+    //public class CardBehavior : Behavior
+    //{
+    //    public override string Text => "card";
 
-        public async override Task Invoke()
-        {
-            //await HttpContext.Response.WriteAsync(System.IO.File.ReadAllText(@"E:\DevSource\Phyah\Phyah.Huaxue\index.html"));
-            await HtmlFile(@"E:\DevSource\Phyah\Phyah.Huaxue\Behind\card.html");
-            //HttpContext.Response.
-        }
-    }
+    //    public async override Task Invoke()
+    //    {
+    //        //await HttpContext.Response.WriteAsync(System.IO.File.ReadAllText(@"E:\DevSource\Phyah\Phyah.Huaxue\index.html"));
+    //        await HtmlFile(@"E:\DevSource\Phyah\Phyah.Huaxue\Behind\card.html");
+    //        //HttpContext.Response.
+    //    }
+    //}
 }

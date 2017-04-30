@@ -12,9 +12,11 @@ namespace Phyah.Huaxue.Biz
     public class DataContext : DbContext
     {
         public DbSet<Users> Users { set; get; }
-
-        public DbSet<Projects> Blogs { set; get; }
-        public DbSet<CardInfoes> CardInfoes { set; get; }
+        
+        public DbSet<Pages> Pages { set; get; }
+        public DbSet<Card> Card { set; get; }
+        public DbSet<Modules> Modules { set; get; }
+        public DbSet<PageModules> PageModules { set; get; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseMySQL(AppSetting.AppSettings["HuaxueConnectionString"].ToString());

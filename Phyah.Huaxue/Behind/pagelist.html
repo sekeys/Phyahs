@@ -1,0 +1,125 @@
+﻿<div class="panel-body panel-border" style="background-color:white;">
+    <div style="margin:10px;">
+        <div class="row">
+            <h3 class="panel-title" style="margin-left:10px;">页面列表</h3>
+            <div>
+                <div style="text-align:right">
+                    <button class="btn btn-turquoise add_new_user" onclick="" style="margin-right:20px;">添加</button>
+                </div>
+            </div>
+            <table id="userlist" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>名称</th>
+                        <th>描述</th>
+                        <th>操    作</th>
+                    </tr>
+                </thead>
+
+                <tbody></tbody>
+            </table>
+
+            <script src="wwwroot/js/behind/userlist.js"></script>
+            <script>
+
+                (function () {
+                    function initList() {
+                        zonic.ajax("pages", "get", null, function (d) {
+                            var z = zonic("#userlist tbody");
+                            z.empty();
+                            var index = 0;
+                            window.JSON.parse(d).forEach(function (t) {
+                                zonic("<tr style='height:30px;'><td>" + (++index) + "</td><td>" + t.Name + "</td><td>" + t.Description + "</td><td><button class=\"btn btn-turquoise\" onclick='window.modify(\"" + t.Id + "\",\"" + t.Name + "\",this)'>修改</button><button class=\"btn btn-turquoise\">设计</button></td></tr>").attr("zonic-data", JSON.stringify(t)).appendTo(z).on("click", function () {
+
+                                    zonic.ajax("pagemodules", "get", { id: t.Id }, function (d1) {
+                                        var layer = zonic.ui.layer({ dragable: false, center: true, width: "920px", height: "640px" }).append("<div style='margin-top:10px;>'><h3 class=\"panel-title\" style=\"margin-left:10px;\" > 页面列表</h3><div class='content-container row'><table class=\"table table-bordered table-striped\" style='width:820px;margin-left:40px;margin-top:10px;'><thead ><tr><th>#</th><th>名称</th><th>描述</th><th>操    作</th></tr></thead ><tbody></tbody></table ></div></div>");
+                                        var zlayer = layer.find("table tbody");
+                                        zlayer.empty();
+                                        var index = 0;
+                                        window.JSON.parse(d1).forEach(function (t) {
+                                            var zl = zonic("<tr style='height:30px;'><td>" + (++index) + "</td><td>" + t.Name + "</td><td>" + t.Description + "</td><td><button class=\"btn btn-turquoise cancle\">移除</button></td></tr>").attr("zonic-data", JSON.stringify(t)).appendTo(zzlayer);
+                                            zl.find(".cancel").on("click", function () {
+                                                zonic.ajax("pagemodules", "delete", t.Id, function (d) {
+                                                    initList();
+                                                });
+                                            });
+                                        });
+                                        layer.find(".close").on("click", function () {
+                                            layer.remove();
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    }
+                    initList();
+                    zonic(".add_new_user").on("click", function () {
+                        zonic(this).attr("disabled", "disabled");
+                        var layer = zonic.ui.layer({ dragable: false, center: true, width: "40%" }).append(zonic(".main_userlist_add").html());
+                        layer.find(".btn-added").text("添加");
+                        layer.find(".btn-cancel").on("click", function () {
+                            layer.remove();
+                            zonic(".add_new_user").removeAttr("disabled");
+                        });
+                        layer.find(".btn-added").on("click", function (e) {
+                            var obj = zonic.serialize(layer.find(".form-group").selected[0]);
+
+                            zonic.ajax("pages", "post", obj, function (d) {
+                                d = typeof d == "string" ? window.JSON.parse(d) : d;
+                                if (d.result) {
+                                    alert("添加成功");
+                                    initList();
+                                    layer.remove();
+                                }
+                            });
+                        });
+
+                    });
+                    window.modify = function (id, un, self) {
+                        var layer = zonic.ui.layer({ dragable: false, center: true, width: "40%" }).append(zonic(".main_userlist_add").html());
+                        layer.find(".btn-cancel").on("click", function () {
+                            layer.remove();
+                            zonic(".add_new_user").removeAttr("disabled");
+                        });
+                        layer.find(".btn-added").text("修改");
+                        var data = JSON.parse(zonic(self).parent().parent().attr("zonic-data"));
+                        zonic.deserialize(layer.find(".form-group").selected[0], data);
+                        //layer.find("[name=account]").value(un);
+                        layer.find(".btn-added").on("click", function (e) {
+                            var obj = zonic.serialize(layer.find(".form-group").selected[0]);
+
+                            obj.Id = id;
+                            zonic.ajax("modules", "put", obj, function (d) {
+                                d = typeof d == "string" ? window.JSON.parse(d) : d;
+                                if (d.result) {
+                                    alert("修改成功");
+                                    initList();
+                                    layer.remove();
+                                }
+                            });
+                        });
+                    }
+                })();
+            </script>
+        </div>
+    </div>
+</div>
+<div style="display:none;" class="main_userlist_add">
+    <div class="form-group" style="margin-top:20px;margin-left:20px;">
+        <div class="col-sm-10">
+            <div style="margin-top:10px;">
+                <label class="col-sm-2 control-label" style="height:30px;line-height:30px;display:inline-block;">名称:</label>
+                <input type="text" name="name" class="form-control input-sm" placeholder="" style="display:inline-block;width:460px;">
+            </div>
+            <div style="margin-top:10px;">
+                <label class="col-sm-2 control-label" style="height:30px;line-height:30px;display:inline-block;">描述:</label>
+                <textarea name="description" class="form-control input-sm" placeholder="" style="display:inline-block;width:460px;height:80px;"></textarea>
+            </div>
+            <div style="margin-top:15px;text-align:right;margin-right:40px;">
+                <button class="btn btn-secondary btn-single btn-added">添  加</button>
+                <button class="btn btn-secondary btn-single btn-cancel">取  消</button>
+            </div>
+        </div>
+    </div>
+</div>

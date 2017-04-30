@@ -77,7 +77,13 @@ namespace Phyah.Huaxue
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(DashbordBehavior));
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(UserBehavior));
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(UserListBehavior));
-            Phyah.Web.BehaviorFactory.Factory.Cache(typeof(CardBehavior));
+            Phyah.Web.BehaviorFactory.Factory.Cache(typeof(CardsBehavior));
+            Phyah.Web.BehaviorFactory.Factory.Cache(typeof(CardListBehavior));
+            Phyah.Web.BehaviorFactory.Factory.Cache(typeof(ModuleBehavior)); 
+            Phyah.Web.BehaviorFactory.Factory.Cache(typeof(ModuleListBehavior));
+            Phyah.Web.BehaviorFactory.Factory.Cache(typeof(PageListBehavior));
+            Phyah.Web.BehaviorFactory.Factory.Cache(typeof(PageBehavior));
+            Phyah.Web.BehaviorFactory.Factory.Cache(typeof(PageModulesBehavior));
         }
         public void ConfigureServices(IServiceCollection services)
         {

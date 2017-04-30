@@ -12,6 +12,17 @@ namespace Phyah.Huaxue.Biz
         {
 
         }
-
+        public void ResetPwd(Users users)
+        {
+            var model = (from u in this.Context.Set<Users>()
+                        where u.Id == users.Id
+                        select u).FirstOrDefault() ;
+            if (model == null)
+            {
+                return;
+            }
+            model.Password = users.Password;
+            Update(model);
+        }
     }
 }

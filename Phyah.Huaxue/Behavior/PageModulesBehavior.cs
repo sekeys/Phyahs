@@ -1,5 +1,4 @@
 ﻿using Phyah.Huaxue.Biz;
-using Phyah.Huaxue.Models;
 using Phyah.Web;
 using System;
 using System.Collections.Generic;
@@ -8,19 +7,26 @@ using System.Threading.Tasks;
 
 namespace Phyah.Huaxue
 {
-    public class UserBehavior : RestBehavior
+
+    public class PageModulesBehavior : RestBehavior
     {
-        readonly UsersService Service;
-        public override string Text => "Users";
-        public UserBehavior()
+        readonly PageService Service;
+        readonly PageModulesService PageModuleService;
+        public PageModulesBehavior()
         {
-            Service = new UsersService();
+            Service = new PageService();
+            PageModuleService = new PageModulesService();
         }
+        public override string Text => "pagemodules";
+
         public async Task Get()
         {
             try
             {
-                await Json(Service.FindAll().Select(m => new { Id = m.Id, UserName = m.UserName, Nick = m.Nick }));
+                var id = Request.Query["pageid"];
+                //Tuple<int, IList<Card>> item = await Service.PaginationAsync(null, current);
+                var item = Service.Modules(id);
+                await Json(item);
             }
             catch (Exception ex)
             {
@@ -31,12 +37,12 @@ namespace Phyah.Huaxue
         {
             try
             {
-                Service.Add(new Models.Users()
+                PageModuleService.Add(new Models.PageModules()
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Nick = Request.Form["nick"],
-                    Password = Request.Form["pwd"],
-                    UserName = Request.Form["account"]
+                    Index = 1,
+                    Children = Request.Form["module"],
+                    PageId = Request.Form["pageid"]
                 });
                 await Json(new { result = true });
             }
@@ -45,14 +51,17 @@ namespace Phyah.Huaxue
                 await Status(StatusCode.UNKNOWERROR, ex.Message);
             }
         }
-
         public async Task Head()
         {
             try
             {
-                await Json((from item in Service.Context.Set<Users>()
-                            where item.Id == Request.Query["id"]
-                            select item).FirstOrDefault());
+                string id = Request.Query["id"];
+                var page = Service.Single(id);
+                if (page != null)
+                {
+
+                }
+                await Json(new { result = true, page = page, modules = Service.Modules(id) });
             }
             catch (Exception ex)
             {
@@ -63,10 +72,13 @@ namespace Phyah.Huaxue
         {
             try
             {
-                Service.ResetPwd(new Models.Users()
+
+                PageModuleService.Add(new Models.PageModules()
                 {
-                    Id = Request.Form["id"],
-                    Password = Request.Form["pwd"]
+                    Id = Request.Form["Id"],
+                    Index = 1,
+                    Children = Request.Form["module"],
+                    PageId = Request.Form["pageid"]
                 });
                 await Json(new { result = true });
             }
