@@ -39,14 +39,16 @@ namespace Phyah.Huaxue.Biz
             var result = from r in this.Context.Set<PageModules>()
                          join m in this.Context.Set<Modules>()
                          on r.Children equals m.Id
-                         where r.Id == pageid
+                         where r.PageId == pageid
                          orderby r.Index descending
                          select new PageModuleEntity
                          {
                              CreateTime = m.CreateTime,
                              Description = m.Description,
                              Html = m.Html,
-                             Id = m.Id,
+                             PageId=r.PageId,
+                             Id = r.Id,
+                             ModuleId=m.Id,
                              Index = r.Index,
                              Name = m.Name
                          };

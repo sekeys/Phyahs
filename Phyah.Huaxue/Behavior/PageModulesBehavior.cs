@@ -23,10 +23,10 @@ namespace Phyah.Huaxue
         {
             try
             {
-                var id = Request.Query["pageid"];
+                var id = Request.Query["id"].ToString();
                 //Tuple<int, IList<Card>> item = await Service.PaginationAsync(null, current);
                 var item = Service.Modules(id);
-                await Json(item);
+                await Json( item );
             }
             catch (Exception ex)
             {
@@ -41,7 +41,7 @@ namespace Phyah.Huaxue
                 {
                     Id = Guid.NewGuid().ToString(),
                     Index = 1,
-                    Children = Request.Form["module"],
+                    Children = Request.Form["moduleid"],
                     PageId = Request.Form["pageid"]
                 });
                 await Json(new { result = true });
@@ -55,7 +55,7 @@ namespace Phyah.Huaxue
         {
             try
             {
-                string id = Request.Query["id"];
+                string id = Request.Query["id"].ToString();
                 var page = Service.Single(id);
                 if (page != null)
                 {
@@ -68,16 +68,28 @@ namespace Phyah.Huaxue
                 await Status(StatusCode.UNKNOWERROR, ex.Message);
             }
         }
+        public async Task Delete()
+        {
+            try
+            {
+                string id = Request.Form["id"].ToString();
+                PageModuleService.Delete(id);
+                await Json(new { result = true });
+            }
+            catch (Exception ex)
+            {
+                await Status(StatusCode.UNKNOWERROR, ex.Message);
+            }
+        }
         public async Task PUT()
         {
             try
             {
-
                 PageModuleService.Add(new Models.PageModules()
                 {
                     Id = Request.Form["Id"],
                     Index = 1,
-                    Children = Request.Form["module"],
+                    Children = Request.Form["moduleid"],
                     PageId = Request.Form["pageid"]
                 });
                 await Json(new { result = true });

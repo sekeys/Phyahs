@@ -3389,7 +3389,7 @@
         if (conf.center) {
             window.setTimeout(function () {
                 var r = u.getBoundingRect(), width = r.width, height = r.height;
-                u.css({ opacity: 1, top: ((conf.top || window.screen.availHeight / 2) - height/2) + "px", left: ((conf.left || window.screen.availWidth / 2) - width / 1.5) + "px" });
+                u.css({ opacity: 1, top: ((conf.top || window.screen.availHeight / 2) - height/2) + "px", left: ((conf.left || window.screen.availWidth / 2) - width / 2) + "px" });
             }, 0);
         }
         else { window.setTimeout(function () { u.css({ opacity: 1 }); }, 0); }

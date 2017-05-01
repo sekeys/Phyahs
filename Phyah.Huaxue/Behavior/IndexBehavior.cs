@@ -5,6 +5,7 @@ namespace Phyah.Huaxue
     using Microsoft.AspNetCore.Http;
     using Phyah.Configuration;
     using Phyah.Web;
+    using Phyah.Web.Razor;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -19,6 +20,18 @@ namespace Phyah.Huaxue
             string content= System.IO.File.ReadAllText($@"{AppSetting.AppSettings["hostdir"]}\index.html");
             return HttpContext.Response.WriteAsync(content);
             
+            //HttpContext.Response.
+        }
+    }
+    public class RazorBehavior : Behavior
+    {
+        public override string Text => "razor";
+
+        public override Task Invoke()
+        {
+            HostingEnvironment.SetRootPath(@"E:\DevSource\Phyah\Phyah.Huaxu");
+           string content= new RazorViewEngine().RenderView(HttpContext, @"E:\DevSource\Phyah\Phyah.Huaxue\index.html", null, new DynamicDictionary());
+            return HttpContext.Response.WriteAsync(content);
             //HttpContext.Response.
         }
     }

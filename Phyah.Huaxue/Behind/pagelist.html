@@ -30,26 +30,58 @@
                             z.empty();
                             var index = 0;
                             window.JSON.parse(d).forEach(function (t) {
-                                zonic("<tr style='height:30px;'><td>" + (++index) + "</td><td>" + t.Name + "</td><td>" + t.Description + "</td><td><button class=\"btn btn-turquoise\" onclick='window.modify(\"" + t.Id + "\",\"" + t.Name + "\",this)'>修改</button><button class=\"btn btn-turquoise\">设计</button></td></tr>").attr("zonic-data", JSON.stringify(t)).appendTo(z).on("click", function () {
-
-                                    zonic.ajax("pagemodules", "get", { id: t.Id }, function (d1) {
-                                        var layer = zonic.ui.layer({ dragable: false, center: true, width: "920px", height: "640px" }).append("<div style='margin-top:10px;>'><h3 class=\"panel-title\" style=\"margin-left:10px;\" > 页面列表</h3><div class='content-container row'><table class=\"table table-bordered table-striped\" style='width:820px;margin-left:40px;margin-top:10px;'><thead ><tr><th>#</th><th>名称</th><th>描述</th><th>操    作</th></tr></thead ><tbody></tbody></table ></div></div>");
-                                        var zlayer = layer.find("table tbody");
-                                        zlayer.empty();
-                                        var index = 0;
-                                        window.JSON.parse(d1).forEach(function (t) {
-                                            var zl = zonic("<tr style='height:30px;'><td>" + (++index) + "</td><td>" + t.Name + "</td><td>" + t.Description + "</td><td><button class=\"btn btn-turquoise cancle\">移除</button></td></tr>").attr("zonic-data", JSON.stringify(t)).appendTo(zzlayer);
-                                            zl.find(".cancel").on("click", function () {
-                                                zonic.ajax("pagemodules", "delete", t.Id, function (d) {
-                                                    initList();
+                                zonic("<tr style='height:30px;'><td>" + (++index) + "</td><td>" + t.Name + "</td><td>" + t.Description + "</td><td><button class=\"btn btn-turquoise\" onclick='window.modify(\"" + t.Id + "\",\"" + t.Name + "\",this)'>修改</button><button class=\"btn btn-turquoise btn-design\">设计</button></td></tr>").attr("zonic-data", JSON.stringify(t)).appendTo(z).find(".btn-design").on("click", function () {
+                                    var layer = zonic.ui.layer({ dragable: false, center: true, width: "920px", height: "640px" }).append("<div style='margin-top:10px;>'><h3 class=\"panel-title\" style=\"margin-left:10px;\" > 页面列表</h3><div class='content-container row'><div><div style=\"text-align:right\" ><button class=\"btn btn-turquoise add_new_pagemodule\" style=\"margin-right:60px;\">添加</button></div></div ><table class=\"table table-bordered table-striped\" style='width:820px;margin-left:40px;margin-top:10px;'><thead><tr><th>#</th><th>名称</th><th>描述</th><th>操    作</th></tr></thead ><tbody></tbody></table ></div></div>");
+                                    layer.find(".add_new_pagemodule").on("click", function () {
+                                        selectModule(t.Id, function () {
+                                            initPageModule();
+                                        });
+                                    });
+                                    layer.find(".close").on("click", function () {
+                                        layer.remove();
+                                    });
+                                    initPageModule();
+                                    function initPageModule() {
+                                        zonic.ajax("pagemodules", "get", { id: t.Id }, function (d1) {
+                                            var zlayer = layer.find("table tbody");
+                                            zlayer.empty();
+                                            var index = 0;
+                                            window.JSON.parse(d1).forEach(function (t) {
+                                                var zl = zonic("<tr style='height:30px;'><td>" + (++index) + "</td><td>" + t.Name + "</td><td>" + t.Description + "</td><td><button class=\"btn btn-turquoise cancel\">移除</button></td></tr>").attr("zonic-data", JSON.stringify(t)).appendTo(zlayer);
+                                                zl.find(".cancel").on("click", function () {
+                                                    zonic.ajax("pagemodules", "delete", { id: t.Id }, function (d) {
+                                                        initPageModule();
+                                                    });
                                                 });
                                             });
                                         });
-                                        layer.find(".close").on("click", function () {
+                                    }
+                                });
+                            });
+                        });
+                    }
+                    function selectModule(id, callback) {
+                        zonic.ajax("modules", "get", null, function (d1) {
+                            var layer = zonic.ui.layer({ dragable: false, center: true, width: "920px", height: "640px" }).append("<div style='margin-top:10px;>'><h3 class=\"panel-title\" style=\"margin-left:10px;\" > 页面列表</h3><div class='content-container row'><table class=\"table table-bordered table-striped\" style='width:820px;margin-left:40px;margin-top:10px;'><thead><tr><th>#</th><th>名称</th><th>描述</th><th>操    作</th></tr></thead ><tbody></tbody></table ></div></div>");
+                            var zlayer = layer.find("table tbody");
+                            function initPageModule1() {
+                                zlayer.empty();
+                                var index = 0;
+                                window.JSON.parse(d1).forEach(function (t) {
+                                    var zl = zonic("<tr style='height:30px;'><td>" + (++index) + "</td><td>" + t.Name + "</td><td>" + t.Description + "</td><td><button class=\"btn btn-turquoise btn-selected\">选择</button></td></tr>").attr("zonic-data", JSON.stringify(t)).appendTo(zlayer).find(".btn-selected").on("click", function () {
+                                        //zlayer.remove();
+                                        zonic.ajax("pagemodules", "post", { moduleid: t.Id, pageid: id }, function (d1) {
                                             layer.remove();
+                                            callback(t);
                                         });
                                     });
                                 });
+                            }
+                            //zlayer.find(".add_new_pagemodule").on("click", function () {
+                            //})
+                            initPageModule1();
+                            layer.find(".close").on("click", function () {
+                                layer.remove();
                             });
                         });
                     }

@@ -11,6 +11,7 @@
     <Content Include="wwwroot\css\behind\bootstrap.css" />
     <Content Include="wwwroot\css\behind\font-awesome.min.css" />
     <Content Include="wwwroot\css\behind\font-icon.css" />
+    <Content Include="wwwroot\css\dropzone.css" />
     <Content Include="wwwroot\css\fonts\fontawesome-webfont (1).woff2" />
     <Content Include="wwwroot\css\behind\side.css" />
     <Content Include="wwwroot\css\fonts\fontawesome-webfont.eot" />
@@ -21,6 +22,7 @@
     <Content Include="wwwroot\css\index.css" />
     <Content Include="wwwroot\js\behind\Common.js" />
     <Content Include="wwwroot\js\behind\userlist.js" />
+    <Content Include="wwwroot\js\uploader.js" />
     <Content Include="wwwroot\js\Zonic.js">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
@@ -94,6 +96,10 @@
     <Content Include="wwwroot\temp\yq0KYVdfiymAWqEVAAgJmP6O_Uk829.jpg" />
     <Content Include="wwwroot\temp\yq0KYVdfrQiASpC4AAAMpjvcGrI953.png" />
     <Content Include="wwwroot\temp\yq0KYVdsybWAGpN5AAB7GNHu4vE313.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="view\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />

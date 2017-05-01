@@ -84,6 +84,8 @@ namespace Phyah.Huaxue
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(PageListBehavior));
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(PageBehavior));
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(PageModulesBehavior));
+            Phyah.Web.BehaviorFactory.Factory.Cache(typeof(UploadBehavior));
+            Phyah.Web.BehaviorFactory.Factory.Cache(typeof(RazorBehavior)); 
         }
         public void ConfigureServices(IServiceCollection services)
         {

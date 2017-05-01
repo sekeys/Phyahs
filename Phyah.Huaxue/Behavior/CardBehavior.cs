@@ -84,7 +84,7 @@ namespace Phyah.Huaxue
                     CardNo = Request.Form["cardNo"],
                     Description = Request.Form["description"],
                     Href = Request.Form["href"],
-                    ImageSource = Request.Form["imgsrc"],
+                    ImageSource = Request.Form["imagesource"],
                     Data = Request.Form["data"],
                     Remark = Request.Form["remark"],
                     Title = Request.Form["title"]

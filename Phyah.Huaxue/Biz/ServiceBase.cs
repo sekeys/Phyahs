@@ -184,6 +184,15 @@ namespace Phyah.Huaxue.Biz
                 return result.Skip((current - 1) * size).Take(current * size).ToList();
             }
         }
+        public void Delete(string id)
+        {
+            var model = Single(id);
+            if (model != null)
+            {
+                db.Set<T>().Remove(model);
+                db.SaveChanges();
+            }
+        }
         public void Delete(params object[] keyValues)
         {
             T model = Find(keyValues);
