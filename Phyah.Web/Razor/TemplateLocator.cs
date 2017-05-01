@@ -13,14 +13,27 @@ namespace Phyah.Web.Razor
         {
             string templatePath = Phyah.Web.HostingEnvironment.GetMapPath(viewName);
 
-            if (!File.Exists(templatePath)) throw new FileNotFoundException("view template file can't find.");
-            templatePath = @"E:\DevSource\Phyah\Phyah.Huaxue\index.html";
+            //if (!File.Exists(templatePath)) throw new FileNotFoundException("view template file can't find.");
+            
             string viewTemplate = null;
-            using (StreamReader reader = new StreamReader(new FileStream(templatePath, FileMode.Open, FileAccess.Read), Encoding.UTF8))
+            if (File.Exists($"{templatePath}.cshtml"))
             {
-                viewTemplate = reader.ReadToEnd();
+                using (StreamReader reader = new StreamReader(new FileStream($"{templatePath}.cshtml", FileMode.Open, FileAccess.Read), Encoding.UTF8))
+                {
+                    viewTemplate = reader.ReadToEnd();
+                }
             }
-
+            else if (File.Exists($"{templatePath}.html"))
+            {
+                using (StreamReader reader = new StreamReader(new FileStream($"{templatePath}.cshtml", FileMode.Open, FileAccess.Read), Encoding.UTF8))
+                {
+                    viewTemplate = reader.ReadToEnd();
+                }
+            }
+            else
+            {
+                throw new FileNotFoundException("view template file can't find.");
+            }
             return viewTemplate;
         }
 

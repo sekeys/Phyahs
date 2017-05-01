@@ -51,6 +51,7 @@ namespace Phyah.Huaxue
             AppSetting.AppSettings["hostdir"] = env.ContentRootPath;
 
             HostingEnvironment.SetRootPath(env.ContentRootPath);
+
             Phyah.Configuration.ConfigurationStartup.RootConfigurePath =
               System.IO.Path.Combine(env.ContentRootPath, "setting.json");
 

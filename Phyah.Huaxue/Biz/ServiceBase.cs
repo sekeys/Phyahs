@@ -93,6 +93,12 @@ namespace Phyah.Huaxue.Biz
                          select i;
             return result.FirstOrDefault();
         }
+        public T Single(System.Linq.Expressions.Expression<Func<T, bool>> expression)
+        {
+            var result = this.Context.Set<T>().Where(expression);
+            return result.FirstOrDefault();
+        }
+
         public async Task<T> SingleAsync(string id)
         {
             var result = from i in this.Context.Set<T>()

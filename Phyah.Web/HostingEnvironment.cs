@@ -37,6 +37,7 @@ namespace Phyah.Web
                 List<string> prePath = rootPath.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                 List<string> srcPath = strPath.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                 ComputePath(prePath, srcPath);
+                Console.WriteLine(rootPath);
                 if (prePath.Count > 0 && prePath[0].Contains(":"))//windows
                 {
                     if (prePath.Count == 1)

@@ -99,6 +99,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="index.cshtml" />
     <None Include="view\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
