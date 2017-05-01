@@ -16,6 +16,7 @@ namespace Phyah.Chain
         protected readonly IExecutor ExecutorQueue;
         public AsyncChain()
         {
+            //ExecutorQueue = new IndependentThreadExecutor("Phayh.ChainAsync", TimeSpan.FromMilliseconds(100));
             ExecutorQueue = new IndependentThreadExecutor("Phayh.ChainAsync", TimeSpan.FromMilliseconds(100));
         }
 

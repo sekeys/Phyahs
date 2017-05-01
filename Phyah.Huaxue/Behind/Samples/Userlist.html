@@ -1,0 +1,165 @@
+﻿<div class="panel-body panel-border" style="background-color:white;">
+    <div style="margin:10px;">
+        <div class="row">
+            <h3 class="panel-title" style="margin-left:10px;">后台用户</h3>
+            <div>
+                <div style="text-align:right"><button class="btn btn-turquoise add_new_user" onclick="" style="margin-right:20px;">添加用户</button></div>
+            </div>
+            <table id="userlist" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>用户名称</th>
+                        <th>用户姓名</th>
+                        <th>操    作</th>
+                    </tr>
+                </thead>
+
+                <tbody></tbody>
+            </table>
+
+            <script src="wwwroot/js/behind/userlist.js"></script>
+            <script>
+
+                (function () {
+                    function initList() {
+                        zonic.ajax("users", "get", null, function (d) {
+                            var z = zonic("#userlist tbody");
+                            z.empty();
+                            var index = 0;
+                            window.JSON.parse(d).forEach(function (t) {
+                                zonic("<tr><td>" + (++index) + "</td><td>" + t.UserName + "</td><td>" + t.Nick + "</td><td><button class=\"btn btn-turquoise\" onclick='window.modify(\"" + t.Id + "\",\""+t.UserName+"\")'>重置密码</button></td></tr>").appendTo(z);
+                            });
+
+                        });
+                    }
+                    initList();
+                    zonic(".add_new_user").on("click", function () {
+                        zonic(this).attr("disabled", "disabled");
+                        var layer=zonic.ui.layer({ dragable: false, center: true, width: "40%" }).append(zonic(".main_userlist_add").html());
+                        layer.find(".btn-cancel").on("click", function () {
+                            layer.remove();
+                            zonic(".add_new_user").removeAttr("disabled");
+                        });
+                        layer.find(".btn-added").on("click", function (e) {
+                            var obj = zonic.serialize(layer.find(".form-group").selected[0]);
+                            if (!obj.account) {
+                                alert("密码不能为空");
+                                return;
+                            }
+                            if (!obj.repeat) {
+                                alert("重复密码不能为空");
+                                return;
+                            }
+                            if (!obj.pwd) {
+                                alert("账号不能为空");
+                                return;
+                            }
+                            if (!obj.nick) {
+                                alert("昵称不能为空");
+                                return;
+                            }
+                            if (obj.pwd !== obj.repeat) {
+                                alert("密码与重复密码不同，请仔细输入。");
+                                layer.find("[name=repeat]").value("");
+                                layer.find("[name=pwd]").value("");
+                                return;
+                            }
+                            zonic.ajax("users", "post", obj, function (d) {
+                                d = typeof d == "string" ? window.JSON.parse(d) : d;
+                                if (d.result) {
+                                    alert("添加成功");
+                                    initList();
+                                    layer.remove();
+                                }
+                            });
+                        });
+
+                    });
+                    window.modify = function (id,un) {
+                        var layer = zonic.ui.layer({ dragable: false, center: true, width: "40%" }).append(zonic(".main_userlist_edit").html());
+                        layer.find(".btn-cancel").on("click", function () {
+                            layer.remove();
+                            zonic(".add_new_user").removeAttr("disabled");
+                        });
+                        layer.find("[name=account]").value(un);
+                        layer.find(".btn-added").on("click", function (e) {
+                            var obj = zonic.serialize(layer.find(".form-group").selected[0]);
+                            if (!obj.account) {
+                                alert("密码不能为空");
+                                return;
+                            }
+                            if (!obj.repeat) {
+                                alert("重复密码不能为空");
+                                return;
+                            } 
+                            if (obj.pwd !== obj.repeat) {
+                                alert("密码与重复密码不同，请仔细输入。");
+                                layer.find("[name=repeat]").value("");
+                                layer.find("[name=pwd]").value("");
+                                return;
+                            }
+                            obj.Id = id;
+                            zonic.ajax("users", "put", obj, function (d) {
+                                d = typeof d == "string" ? window.JSON.parse(d) : d;
+                                if (d.result) {
+                                    alert("添加成功");
+                                    initList();
+                                    layer.remove();
+                                }
+                            });
+                        });
+                    }
+                })();
+            </script>
+        </div>
+    </div>
+</div>
+<div style="display:none;" class="main_userlist_add">
+    <div class="form-group" style="margin-top:20px;margin-left:20px;">
+        <div class="col-sm-10">
+            <div style="margin-top:10px;">
+                <label class="col-sm-2 control-label" style="height:30px;line-height:30px;display:inline-block;">用户昵称:</label>
+                <input type="text" name="nick" class="form-control input-sm" placeholder="" style="display:inline-block;width:460px;">
+            </div>
+            <div style="margin-top:10px;">
+                <label class="col-sm-2 control-label" style="height:30px;line-height:30px;display:inline-block;">账号:</label>
+                <input type="text" name="account" class="form-control input-sm" placeholder="" style="display:inline-block;width:460px;">
+            </div>
+            <div style="margin-top:10px;">
+                <label class="col-sm-2 control-label" style="height:30px;line-height:30px;display:inline-block;">密码:</label>
+                <input type="password" name="pwd" class="form-control input-sm" placeholder="" style="display:inline-block;width:460px;">
+            </div>
+            <div style="margin-top:10px;">
+                <label class="col-sm-2 control-label" style="height:30px;line-height:30px;display:inline-block;">重复密码:</label>
+                <input type="password" name="repeat" class="form-control input-sm" placeholder="" style="display:inline-block;width:460px;">
+            </div>
+            <div style="margin-top:15px;text-align:right;margin-right:40px;">
+                <button class="btn btn-secondary btn-single btn-added">添  加</button>
+                <button class="btn btn-secondary btn-single btn-cancel">取  消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="display:none;" class="main_userlist_edit">
+    <div class="form-group" style="margin-top:20px;margin-left:20px;">
+        <div class="col-sm-10">
+            <div style="margin-top:10px;">
+                <label class="col-sm-2 control-label" style="height:30px;line-height:30px;display:inline-block;">账号:</label>
+                <input type="text" name="account" readonly class="form-control input-sm" placeholder="" style="display:inline-block;width:460px;">
+            </div>
+            <div style="margin-top:10px;">
+                <label class="col-sm-2 control-label" style="height:30px;line-height:30px;display:inline-block;">新密码:</label>
+                <input type="password" name="pwd" class="form-control input-sm" placeholder="" style="display:inline-block;width:460px;">
+            </div>
+            <div style="margin-top:10px;">
+                <label class="col-sm-2 control-label" style="height:30px;line-height:30px;display:inline-block;">重复密码:</label>
+                <input type="password" name="repeat" class="form-control input-sm" placeholder="" style="display:inline-block;width:460px;">
+            </div>
+            <div style="margin-top:15px;text-align:right;margin-right:40px;">
+                <button class="btn btn-secondary btn-single btn-added">保  存</button>
+                <button class="btn btn-secondary btn-single btn-cancel">取  消</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,30 +6,29 @@ namespace Phyah.EventHub
     using System;
     using System.Collections.Generic;
     using System.Collections.Concurrent;
-    using System.Reflection;
     using System.Linq;
 
     public class DefaultReceptorStore : IReceptorStore
     {
-        public ConcurrentDictionary<string, IEnumerable<IReceptor>> Dictionary = new ConcurrentDictionary<string, IEnumerable<IReceptor>>();
+        public ConcurrentDictionary<string, IQueue<IReceptor>> Dictionary = new ConcurrentDictionary<string, IQueue<IReceptor>>();
 
         public IEnumerable<IReceptor> Match(string name)
         {
-            IEnumerable<IReceptor> receps = null;
+            IQueue<IReceptor> receps = null;
             if (Dictionary.ContainsKey(name))
             {
                 Dictionary.TryGetValue(name, out receps);
             }
-            return receps;
+            return receps.Enum();
         }
-        public IEnumerable<IReceptor> Match(string name, Type type)
+        public IEnumerable<IReceptor> Match(string name,Type type)
         {
-            IEnumerable<IReceptor> receps = null;
+            IQueue<IReceptor> receps = null;
             if (Dictionary.ContainsKey(name))
             {
                 Dictionary.TryGetValue(name, out receps);
             }
-            return receps.Where(m =>type.IsAssignableFrom(m.GetType())) ;
+            return receps.Enum(type);
         }
 
         public IEnumerable<IReceptor> Match<T>() where T : IReceptor
@@ -47,12 +46,12 @@ namespace Phyah.EventHub
             if (Dictionary.ContainsKey(name))
             {
                 var iqueue = Dictionary[name];
-                iqueue.Append(receptor);
+                iqueue.Enqueue(receptor);
             }
             else
             {
-                IEnumerable<IReceptor> queue = new List<IReceptor>();
-                queue.Append(receptor);
+                IQueue<IReceptor> queue = new StoreQueue<IReceptor>();
+                queue.Enqueue(receptor);
                 Dictionary.TryAdd(name, queue);
             }
         }
@@ -65,26 +64,6 @@ namespace Phyah.EventHub
                 name = name.Substring(0, name.Length - 8);
             }
             Store(name, receptor);
-        }
-        public void Unstore(string name)
-        {
-            IEnumerable<IReceptor> receps;
-            if (Dictionary.ContainsKey(name))
-            {
-                Dictionary.TryRemove(name,out receps);
-            }
-        }
-        public void Unstore(string name,IReceptor receptor)
-        {
-            IEnumerable<IReceptor> receps;
-            if (Dictionary.ContainsKey(name))
-            {
-                receps = Dictionary[name];
-                receps = receps.Where(m => !m.Equals(receptor));
-                Dictionary.AddOrUpdate(name, receps, (key, pre) => {
-                    return receps;
-                });
-            }
         }
     }
 }

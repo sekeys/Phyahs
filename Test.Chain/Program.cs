@@ -1,22 +1,43 @@
 ﻿using Phyah.Chain;
+using Phyah.Concurrency;
 using System;
 using System.Threading;
 
 namespace Test
 {
+
     class Program
     {
-        static  void Main(string[] args)
+        static void Main(string[] args)
+        {
+            //new AccessorContextTest().TestAccCtx();
+
+            //new DefaultPipeline(() => { }, () => { }, (ex) => { }).AddLast(new ActionHandler(() =>
+            //{
+            //    Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
+            //    Thread.Sleep(1000);
+            //})).AddLast(new ActionHandler(() =>
+            //{
+            //    Console.WriteLine("t" + Thread.CurrentThread.ManagedThreadId);
+            //})).AddFirst(new ActionHandler(() =>
+            //{
+            //    Console.WriteLine("F" + Thread.CurrentThread.ManagedThreadId);
+            //})).Start();
+            Test();
+            Console.Read();
+        }
+
+        static void Test()
         {
 
             var ac = AsyncChain.Links(() =>
-             {
-                 Console.WriteLine("Hellow World11");
+            {
+                Console.WriteLine("Hellow World11");
 
-             });
+            });
             ac.Link(() =>
             {
-                
+
                 Console.WriteLine("Hellow World22");
 
             }).Link(() =>
@@ -36,8 +57,6 @@ namespace Test
                 Console.WriteLine("Hellow World4555");
 
             });
-            Console.WriteLine("Hello World!");
-            Console.Read();
         }
     }
 }

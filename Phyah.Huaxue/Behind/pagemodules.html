@@ -1,0 +1,42 @@
+﻿<div class="panel-body panel-border" style="background-color:white;">
+    <div style="margin:10px;">
+        <div class="row">
+            <table id="pagemodule" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>名称</th>
+                        <th>描述</th>
+                        <th>操    作</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                </tbody>
+            </table>
+
+            <script>
+                (function () {
+                    function initList1() {
+                        zonic.ajax("pages", "head", null, function (d) {
+                            var z = zonic("#pagemodule tbody");
+                            z.empty();
+                            var index = 0;
+                            window.JSON.parse(d).forEach(function (t) {
+                                var zl = zonic("<tr style='height:30px;'><td>" + (++index) + "</td><td>" + t.Name + "</td><td>" + t.Description + "</td><td><button class=\"btn btn-turquoise cancle\">移除</button></td></tr>").attr("zonic-data", JSON.stringify(t)).appendTo(z);
+                                zl.find(".cancel").on("click", function () {
+                                    zonic.ajax("pagemodule", "delete", obj, function (d) {
+                                        initList();
+                                    });
+                                });
+                            });
+
+                        });
+                    }
+                    initList1();
+                })();
+            </script>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,136 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="assets\Zonic.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\css\behind\bootstrap.css" />
+    <Content Include="wwwroot\css\behind\font-awesome.min.css" />
+    <Content Include="wwwroot\css\behind\font-icon.css" />
+    <Content Include="wwwroot\css\dropzone.css" />
+    <Content Include="wwwroot\css\fonts\fontawesome-webfont (1).woff2" />
+    <Content Include="wwwroot\css\behind\side.css" />
+    <Content Include="wwwroot\css\fonts\fontawesome-webfont.eot" />
+    <Content Include="wwwroot\css\fonts\fontawesome-webfont.ttf" />
+    <Content Include="wwwroot\css\fonts\fontawesome-webfont.woff" />
+    <Content Include="wwwroot\css\fonts\fontawesome-webfont.woff2" />
+    <Content Include="wwwroot\css\fonts\FontAwesome.otf" />
+    <Content Include="wwwroot\css\index.css" />
+    <Content Include="wwwroot\js\behind\Common.js" />
+    <Content Include="wwwroot\js\behind\userlist.js" />
+    <Content Include="wwwroot\js\uploader.js" />
+    <Content Include="wwwroot\js\Zonic.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\temp\allocation.js" />
+    <Content Include="wwwroot\temp\animate.css" />
+    <Content Include="wwwroot\temp\api" />
+    <Content Include="wwwroot\temp\base.css" />
+    <Content Include="wwwroot\temp\baseInit.js" />
+    <Content Include="wwwroot\temp\bootstrap.min.css" />
+    <Content Include="wwwroot\temp\bootstrap.min.js" />
+    <Content Include="wwwroot\temp\buy-personal.png" />
+    <Content Include="wwwroot\temp\commodityDetail.js" />
+    <Content Include="wwwroot\temp\commodityList.js" />
+    <Content Include="wwwroot\temp\component_pc.css" />
+    <Content Include="wwwroot\temp\edit-curve.js" />
+    <Content Include="wwwroot\temp\edit-mall.css" />
+    <Content Include="wwwroot\temp\editShopping.js" />
+    <Content Include="wwwroot\temp\font-awesome.min.css" />
+    <Content Include="wwwroot\temp\getscript" />
+    <Content Include="wwwroot\temp\jquery-1.11.2.min.js" />
+    <Content Include="wwwroot\temp\jquery.colorbox-min.js" />
+    <Content Include="wwwroot\temp\jquery.nanoscroller.js" />
+    <Content Include="wwwroot\temp\jquery.qrcode.min.js" />
+    <Content Include="wwwroot\temp\jweixin-1.0.0.js" />
+    <Content Include="wwwroot\temp\loader.js" />
+    <Content Include="wwwroot\temp\members.css" />
+    <Content Include="wwwroot\temp\nanoscroller.css" />
+    <Content Include="wwwroot\temp\navTemplate1.js" />
+    <Content Include="wwwroot\temp\news.js" />
+    <Content Include="wwwroot\temp\plugin.css" />
+    <Content Include="wwwroot\temp\qc.php" />
+    <Content Include="wwwroot\temp\qzopensl.js" />
+    <Content Include="wwwroot\temp\videoEditInit.js" />
+    <Content Include="wwwroot\temp\vue.min.js" />
+    <Content Include="wwwroot\temp\wechat_login.css" />
+    <Content Include="wwwroot\temp\wqdAccordion.js" />
+    <Content Include="wwwroot\temp\wqdAnimation.js" />
+    <Content Include="wwwroot\temp\wqdArticleDetails.js.下载" />
+    <Content Include="wwwroot\temp\wqdArticleList.js" />
+    <Content Include="wwwroot\temp\wqdArticleLists.js" />
+    <Content Include="wwwroot\temp\wqdattentionlink.js" />
+    <Content Include="wwwroot\temp\wqdcarousel.js" />
+    <Content Include="wwwroot\temp\wqdColorbox.js" />
+    <Content Include="wwwroot\temp\wqdContainer.js" />
+    <Content Include="wwwroot\temp\wqdExtendNav.js" />
+    <Content Include="wwwroot\temp\wqdForm.js" />
+    <Content Include="wwwroot\temp\wqdformDate.js" />
+    <Content Include="wwwroot\temp\wqdhost.css" />
+    <Content Include="wwwroot\temp\wqdHoverContainer.js" />
+    <Content Include="wwwroot\temp\wqdIscroll.js" />
+    <Content Include="wwwroot\temp\wqdManageInfo.js" />
+    <Content Include="wwwroot\temp\wqdMapInit.js" />
+    <Content Include="wwwroot\temp\wqdNavigate.js" />
+    <Content Include="wwwroot\temp\wqdNumberprogress.js" />
+    <Content Include="wwwroot\temp\wqdPicture.js" />
+    <Content Include="wwwroot\temp\wqdProgress.js" />
+    <Content Include="wwwroot\temp\wqdWechatlogin.js" />
+    <Content Include="wwwroot\temp\yq0KYFcy8N6AMJl8AAlB77r1ki4904.jpg" />
+    <Content Include="wwwroot\temp\yq0KYFdfiqCAH2RDAABiJ5LGjr8414.jpg" />
+    <Content Include="wwwroot\temp\yq0KYFdfiqWAKat6AABFo64YCXk928.jpg" />
+    <Content Include="wwwroot\temp\yq0KYFdfk8KAMFSuAAOZ73d3gCQ273.jpg" />
+    <Content Include="wwwroot\temp\yq0KYFdsyOGAe8ILAAB4x9rrHgU951.jpg" />
+    <Content Include="wwwroot\temp\yq0KYFdsySaARBzZAACigyUup3Y188.jpg" />
+    <Content Include="wwwroot\temp\yq0KYFdsySWATd_SAABWlBwQ8i8535.jpg" />
+    <Content Include="wwwroot\temp\yq0KYFdU1a6AX0w5AAY0pBDhWUk377.jpg" />
+    <Content Include="wwwroot\temp\yq0KYVcy8V-ABeLKAANaYgOKCOk815.jpg" />
+    <Content Include="wwwroot\temp\yq0KYVcy8VKAfr2fAAbY9GwCZ7Q323.jpg" />
+    <Content Include="wwwroot\temp\yq0KYVcy8W2ANjYXAAZI-2l1Sjk916.jpg" />
+    <Content Include="wwwroot\temp\yq0KYVcy8WeAeogmAA5ScYXtsFQ223.jpg" />
+    <Content Include="wwwroot\temp\yq0KYVdfiy6AXDg_AABkb5OcI5w773.jpg" />
+    <Content Include="wwwroot\temp\yq0KYVdfiymAWqEVAAgJmP6O_Uk829.jpg" />
+    <Content Include="wwwroot\temp\yq0KYVdfrQiASpC4AAAMpjvcGrI953.png" />
+    <Content Include="wwwroot\temp\yq0KYVdsybWAGpN5AAB7GNHu4vE313.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="index.cshtml" />
+    <None Include="view\index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.1" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="7.0.7-m61" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="System.AppDomain" Version="2.0.11" />
+    <PackageReference Include="System.Reflection" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
+    <PackageReference Include="MongoDB.Bson" Version="2.4.3" />
+    <PackageReference Include="MongoDB.Driver" Version="2.4.3" />
+    <PackageReference Include="MongoDB.Driver.Core" Version="2.4.3" />
+    <PackageReference Include="MySql.Data" Version="7.0.7-m61" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Phyah.Web\Phyah.Web.csproj" />
+    <ProjectReference Include="..\Phyah\Phyah.csproj" />
+  </ItemGroup>
+
+</Project>
