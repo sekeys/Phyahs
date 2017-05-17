@@ -279,12 +279,40 @@
                     }
                     initList();
                     zonic(".add_new_user").on("click", function () {
+                        var self = this;
                         zonic(this).attr("disabled", "disabled");
                         var layer = zonic.ui.layer({ dragable: false, center: true, width: "40%", height: "520px" }).append(zonic(".main_userlist_add").html());
                         layer.find(".btn-added").text("添加");
                         layer.find(".btn-cancel").on("click", function () {
                             layer.remove();
                             zonic(".add_new_user").removeAttr("disabled");
+                        });
+
+                        layer.find(".uploadfile").on("click", function () {
+                            //zonic("#fileupload .uploader-formneedsclick").trigger("click");
+                            var layer1 = zonic.ui.layer({ dragable: false, center: true, width: "40%", height: "520px" }).append(zonic("#fileupload").html());
+                            var dropzone = new Dropzone(layer1.find('.uploader-form').selected[0], {
+                                url: "upload",
+                                method: "post",
+                                previewTemplate: zonic("#preview-template").html(),
+                                parallelUploads: 2,
+                                thumbnailHeight: 120,
+                                thumbnailWidth: 120,
+                                maxFilesize: 100,
+                                filesizeBase: 1000,
+                                thumbnail: function (file, dataUrl) {
+                                }
+
+                            });
+                            dropzone.on("success", function (a, b) {
+                                b = typeof b === "string" ? window.JSON.parse(b) : b;
+                                layer1.remove();
+                                if (b.result) {
+                                    layer.find("[name=imagesource]").value(b.urls[0]);
+                                } else {
+                                    alert("图片上传失败");
+                                }
+                            });
                         });
                         layer.find(".btn-added").on("click", function (e) {
                             var obj = zonic.serialize(layer.find(".form-group").selected[0]);
@@ -298,6 +326,7 @@
                                     alert("添加成功");
                                     initList();
                                     layer.remove();
+                                    zonic(self).removeAttr("disabled");
                                 }
                             });
                         });
@@ -326,6 +355,7 @@
                                     alert("修改成功");
                                     initList();
                                     layer.remove();
+                                    zonic(".add_new_user").removeAttr("disabled");
                                 }
                             });
                         });
@@ -339,7 +369,7 @@
                                 parallelUploads: 2,
                                 thumbnailHeight: 120,
                                 thumbnailWidth: 120,
-                                maxFilesize: 3,
+                                maxFilesize: 100,
                                 filesizeBase: 1000,
                                 thumbnail: function (file, dataUrl) {
                                     //if (file.previewElement) {

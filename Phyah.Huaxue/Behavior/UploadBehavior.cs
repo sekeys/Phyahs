@@ -1,4 +1,5 @@
-﻿using Phyah.Configuration;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using Phyah.Configuration;
 using Phyah.Web;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,8 @@ namespace Phyah.Huaxue
         //dbcontext.Insert(model);
         //            }
         //return Response(200);
+
+        const int chunkSize = 1024000;
         public override async Task Invoke()
         {
             try
@@ -47,23 +50,85 @@ namespace Phyah.Huaxue
                 {
                     Directory.CreateDirectory(folder);
                 }
-                List<string> paths = new List<string>();
-                foreach (var item in HttpContext.Request.Form.Files)
+                //List<string> paths = new List<string>();
+                //foreach (var item in HttpContext.Request.Form.Files)
+                //{
+                //    var guid = Guid.NewGuid().ToString();
+                //    var path = System.IO.Path.Combine(folder, guid + item.FileName);
+                //    using (FileStream fs = new FileStream(path, FileMode.CreateNew))
+                //    {
+                //        item.CopyTo(fs);
+                //    };
+                //    paths.Add($"wwwroot/images/{guid}{item.FileName}");
+                //}
+                string path = "";
+                var boundary = GetBoundary(HttpContext.Request.ContentType);
+                var reader = new MultipartReader(boundary, HttpContext.Request.Body);
+                var section = await reader.ReadNextSectionAsync();
+                while (section != null)
                 {
-                    var guid = Guid.NewGuid().ToString();
-                    var path = System.IO.Path.Combine(folder, guid + item.FileName);
-                    using (FileStream fs = new FileStream(path, FileMode.CreateNew))
+                    // process each image
+                    var buffer = new byte[chunkSize];
+                    var bytesRead = 0;
+                    var fileName = GetFileName(section.ContentDisposition);
+                    if (string.IsNullOrWhiteSpace(fileName))
                     {
-                        item.CopyTo(fs);
-                    };
-                    paths.Add($"wwwroot/images/{guid}{item.FileName}");
+                        section = await reader.ReadNextSectionAsync();
+                        continue;
+                    }
+                    var guid = Guid.NewGuid().ToString();
+                    path = $"wwwroot/images/{guid}{fileName}";
+                    using (var stream = new FileStream(path, FileMode.CreateNew))
+                    {
+                        bytesRead = await section.Body.ReadAsync(buffer, 0, buffer.Length);
+                        while (bytesRead > 0)
+                        {
+                            stream.Write(buffer, 0, bytesRead);
+                            bytesRead = await section.Body.ReadAsync(buffer, 0, buffer.Length);
+                        };
+                    }
+
+                    section = await reader.ReadNextSectionAsync();
                 }
-                await Json(new { result = true, urls = paths });
+
+                await Json(new { result = true, urls = new List<string>() { path } });
             }
             catch (Exception ex)
             {
                 await Status(StatusCode.UNKNOWERROR, ex.Message);
             }
+        }
+
+
+        private static bool IsMultipartContentType(string contentType)
+        {
+            return
+                !string.IsNullOrEmpty(contentType) &&
+                contentType.IndexOf("multipart/", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        private static string GetBoundary(string contentType)
+        {
+            var elements = contentType.Split(' ');
+            var element = elements.Where(entry => entry.StartsWith("boundary=")).First();
+            var boundary = element.Substring("boundary=".Length);
+            // Remove quotes
+            if (boundary.Length >= 2 && boundary[0] == '"' &&
+                boundary[boundary.Length - 1] == '"')
+            {
+                boundary = boundary.Substring(1, boundary.Length - 2);
+            }
+            return boundary;
+        }
+
+        private string GetFileName(string contentDisposition)
+        {
+            return contentDisposition
+                .Split(';')
+                .SingleOrDefault(part => part.Contains("filename"))
+                ?.Split('=')
+                .Last()
+                .Trim('"');
         }
     }
 }

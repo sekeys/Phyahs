@@ -20,6 +20,15 @@
     <Content Include="wwwroot\css\fonts\fontawesome-webfont.woff2" />
     <Content Include="wwwroot\css\fonts\FontAwesome.otf" />
     <Content Include="wwwroot\css\index.css" />
+    <Content Include="wwwroot\images\LOGO.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\images\qrcode_for_gh_5f105abfeb38_344.jpg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\images\华学logo.jpg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="wwwroot\js\behind\Common.js" />
     <Content Include="wwwroot\js\behind\userlist.js" />
     <Content Include="wwwroot\js\uploader.js" />
@@ -131,6 +140,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Phyah.Web\Phyah.Web.csproj" />
     <ProjectReference Include="..\Phyah\Phyah.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\css\behind\新文件夹\" />
   </ItemGroup>
 
 </Project>

@@ -18,16 +18,16 @@ namespace Phyah.Web.Handler
         protected override  void HandleCore()
         {
             
-            string requestPath = HttpContext.Request.Path.ToUriComponent().Trim(new char[] { '/', '\\' });
-            if (string.IsNullOrWhiteSpace(requestPath))
-            {
-                requestPath = AppSetting.AppSettings["defaultweb"]?.ToString();
-                if (string.IsNullOrWhiteSpace(requestPath))
-                {
-                    requestPath = "Index";
-                }
-            }
-            AccessorContext.DefaultContext.Set<IPath>(Web.Path.Parse(requestPath));
+            //string requestPath = HttpContext.Request.Path.ToUriComponent().Trim(new char[] { '/', '\\' });
+            //if (string.IsNullOrWhiteSpace(requestPath))
+            //{
+            //    requestPath = AppSetting.AppSettings["defaultweb"]?.ToString();
+            //    if (string.IsNullOrWhiteSpace(requestPath))
+            //    {
+            //        requestPath = "Index";
+            //    }
+            //}
+            //AccessorContext.DefaultContext.Set<IPath>(Web.Path.Parse(requestPath));
 
             //var user = await SecurityFormTicks.Get(HttpContext);
             //Logs.Log.Degug();

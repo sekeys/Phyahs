@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\js\Color.js" />
+    <Content Include="wwwroot\js\Color.js.map" />
+    <Content Include="wwwroot\js\Color.ts" />
+    <Content Include="wwwroot\js\component.js" />
+    <Content Include="wwwroot\js\component.js.map" />
+    <Content Include="wwwroot\js\Component.ts" />
+    <Content Include="wwwroot\js\Config.js" />
+    <Content Include="wwwroot\js\emitter.js" />
+    <Content Include="wwwroot\js\emitter.js.map" />
+    <Content Include="wwwroot\js\Emitter.ts" />
+    <Content Include="wwwroot\js\IComponent.js" />
+    <Content Include="wwwroot\js\IComponent.js.map" />
+    <Content Include="wwwroot\js\IComponent.ts" />
+    <Content Include="wwwroot\js\loader.js" />
+    <Content Include="wwwroot\js\MonacoEditor.ts" />
+    <Content Include="wwwroot\js\require.js" />
+    <Content Include="wwwroot\js\Style.js" />
+    <Content Include="wwwroot\js\Style.js.map" />
+    <Content Include="wwwroot\js\Style.ts" />
+    <Content Include="wwwroot\js\ui.js" />
+    <Content Include="wwwroot\js\UI.js.map" />
+    <Content Include="wwwroot\js\UI.ts" />
+    <Content Include="wwwroot\js\Zonic.base.js" />
+    <Content Include="wwwroot\js\Zonic.base.js.map" />
+    <Content Include="wwwroot\js\Zonic.base.ts" />
+    <Content Include="wwwroot\js\zonic.css" />
+    <Content Include="wwwroot\js\Zonic.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\css\" />
+    <Folder Include="wwwroot\resource\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.2" />
+  </ItemGroup>
+
+</Project>

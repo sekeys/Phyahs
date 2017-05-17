@@ -1116,7 +1116,6 @@
         }
     };
     element.prototype.removeAttr = function (name) {
-       
         return this.each(function () {
             this.removeAttribute(name);
         });

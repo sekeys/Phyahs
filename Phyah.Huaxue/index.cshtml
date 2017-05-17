@@ -1,8 +1,7 @@
-﻿<!--  -->
+﻿
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-<!-- é¡µé¢headä¿¡æ¯ -->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -48,7 +47,8 @@
 <body class="" style="border:0px;margin:0px;padding:0px;color:black;font-size:14px;font-family:'微软雅黑', Verdana, Arial, Helvetica, sans-serif;background-color:white;">
     <div style="width:1204px;margin-left:auto;margin-right:auto;background-color:white;margin-top:10px;height:64px;">
         <div class="logo" style="display:inline-block;float:left;">
-            <h2 style="margin-top:7px;">华学旅游</h2>
+            <img src="/wwwroot/images/LOGO.png" style="width:36px;height:36px;display: inline-block;vertical-align: middle;"/>
+            <h2 style="margin-top:4px;display: inline-block;">华学旅游</h2>
         </div>
         <div style="line-height:20px;height:64px;margin:0px;padding:0px;border:0px;display:inline-block;float:right;margin-right:50px;">
             <div style="margin-top:12px;font-size:14px;">
@@ -57,24 +57,24 @@
                         <a style="text-decoration:none;color:black;" href="#">首页</a>
                     </li>
                     <li style="display:inline-block;margin:0px;padding:0px;margin-left:20px;">
-                        <a style="text-decoration:none;color:black;" href="#">旅游项目</a>
+                        <a style="text-decoration:none;color:black;" href="#">研学旅行</a>
                     </li>
                     <li style="display:inline-block;margin:0px;padding:0px;margin-left:20px;">
-                        <a style="text-decoration:none;color:black;" href="#">场地信息</a>
+                        <a style="text-decoration:none;color:black;" href="#">华学绿友</a>
                     </li>
                     <li style="display:inline-block;margin:0px;padding:0px;margin-left:20px;">
-                        <a style="text-decoration:none;color:black;" href="#">关于我们</a>
+                        <a style="text-decoration:none;color:black;" href="#">华学资讯</a>
                     </li>
                     <li style="display:inline-block;margin:0px;padding:0px;margin-left:20px;">
-                        <a style="text-decoration:none;color:black;" href="#">联系我们</a>
+                        <a style="text-decoration:none;color:black;" href="#aboutus">关于华学</a>
                     </li>
                 </ul>
             </div>
             <div style="clear:both;"></div>
         </div>
     </div>
-    <div class="banner" style="position:relative; background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url('http://img.wqdian.com/group4/M00/84/AA/yq0KYFcy8PmAIYopAA29Ed8w8wk486.jpg');height:450px;">
-        <div style="height:450px;width:1200px;margin-left:auto;margin-right:auto;">
+    <div class="banner" style="position:relative; background-size: cover; background-position: center center; background-repeat: no-repeat; background-image: url('/AA/yq0KYFcy8PmAIYopAA29Ed8w8wk486.jpg');height:450px;">
+        @*<div style="height:450px;width:1200px;margin-left:auto;margin-right:auto;">
             <div style="width:575px;top:50px;position:relative;left:350px;right:auto;">
                 <div style="border-top:1px solid white;"></div>
                 <div style="height:40px;font-size:18px;color:white;text-align:center;">
@@ -85,238 +85,182 @@
                     <h1 style="font-weight:500;">@ViewBag.TopBanner.Description</h1>
                 </div>
             </div>
-        </div>
+        </div>*@
     </div>
     <section style="height:746px;margin-top:40px;">
         <div class="background" style="position:relative;height:746px;">
             <div style="margin-top:20px;text-align:center;">
-                <h1 style="font-weight:normal;">优惠项目</h1>
-                <p style="color:#808080;">产品全面，价格透明，并提供丰富的后续服务和保</p>
+                <h1 style="font-weight:normal;">研学旅行</h1>
+                <p style="color:#808080;">品&nbsp;牌&nbsp;&nbsp;&nbsp;&nbsp;专&nbsp;业&nbsp;&nbsp;&nbsp;高&nbsp;效&nbsp;&nbsp;&nbsp;&nbsp;创&nbsp;新</p>
             </div>
             <div class="card card_no_index_03" style="position:relative;z-index:1;visibility:visible;width:960px;margin-left:auto;margin-right:auto;margin-top:60px;">
-                <div class="card-item" style="margin-right:20px;display:inline-block;cursor:pointer;">
-                    <div style="width: 277px;height:180px;">
-                        <div style="margin:0px;">
-                            <img style="height:180px;width:412px;" src="http://img.wqdian.com/group4/M00/8B/0A/yq0KYFdsyOGAe8ILAAB4x9rrHgU951.jpg">
+                @foreach (var item in ViewBag.IndexSecond)
+                {
+                    item.ImageSource = $"<img style=\"height:180px;width:412px;\" src=\"{item.ImageSource}\">";
+                    <div class="card-item" style="margin-right:20px;display:inline-block;cursor:pointer;">
+                        <div style="width: 277px;height:180px;">
+                            <div style="margin:0px;">
+                                @item.ImageSource
+                            </div>
                         </div>
-                    </div>
-                    <div style="width: 412px; height: 120px; left: 0px; z-index: 3;background:white;">
-                        <div>
-                            <div style="width:100%;height:100%;">
-                                <h4 style="margin:0px;">
-                                    <strong style="margin-left:10px;margin-top:10px;display:inline-block;">
-                                        <span style="font-size:16px;">
-                                            <span style="color:#363c48;">南昌</span>
+                        <div style="width: 412px; height: 120px; left: 0px; z-index: 3;background:white;">
+                            <div>
+                                <div style="width:100%;height:100%;">
+                                    <h4 style="margin:0px;">
+                                        <strong style="margin-left:10px;margin-top:10px;display:inline-block;">
+                                            <span style="font-size:16px;">
+                                                <span style="color:#363c48;">@item.Title</span>
+                                            </span>
+                                        </strong>
+                                    </h4>
+                                    <p style="margin:10px;margin-left:1px;border-top:1px solid #d1d1d1;"></p>
+                                    <p style="margin-left: 13px;margin-top:5px;">
+                                        <span style="color:#95979c;">
+                                            @item.Description
                                         </span>
-                                    </strong>
-                                </h4>
-                                <p style="margin:10px;margin-left:1px;border-top:1px solid #d1d1d1;"></p>
-                                <p style="margin-left: 13px;margin-top:5px;">
-                                    <span style="color:#95979c;">
-                                        美丽南昌，幸福城市
-                                    </span>
-                                </p>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-item" style="margin-right:20px;display:inline-block;cursor:pointer;">
-                    <div style="width: 277px;height:180px;">
-                        <div style="margin:0px;">
-                            <img style="height:180px;width:412px;" src="http://img.wqdian.com/group4/M00/8B/0A/yq0KYFdsyOGAe8ILAAB4x9rrHgU951.jpg">
-                        </div>
-                    </div>
-                    <div style="width: 412px; height:120px; left: 0px; z-index: 3;background:white;">
-                        <div>
-                            <div style="width:100%;height:100%;">
-                                <h4 style="margin:0px;">
-                                    <strong style="margin-left:10px;margin-top:10px;display:inline-block;">
-                                        <span style="font-size:16px;">
-                                            <span style="color:#363c48;">南昌</span>
-                                        </span>
-                                    </strong>
-                                </h4>
-                                <p style="margin:10px;margin-left:1px;border-top:1px solid #d1d1d1;"></p>
-                                <p style="margin-left: 13px;margin-top:5px;">
-                                    <span style="color:#95979c;">
-                                        美丽南昌，幸福城市
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-item" style="margin-right:20px;display:inline-block;cursor:pointer;">
-                    <div style="width: 277px;height:180px;">
-                        <div style="margin:0px;">
-                            <img style="height:180px;width:412px;" src="http://img.wqdian.com/group4/M00/8B/0A/yq0KYFdsyOGAe8ILAAB4x9rrHgU951.jpg">
-                        </div>
-                    </div>
-                    <div style="width: 412px; height: 120px; left: 0px; z-index: 3;background:white;">
-                        <div>
-                            <div style="width:100%;height:100%;">
-                                <h4 style="margin:0px;">
-                                    <strong style="margin-left:10px;margin-top:10px;display:inline-block;">
-                                        <span style="font-size:16px;">
-                                            <span style="color:#363c48;">南昌</span>
-                                        </span>
-                                    </strong>
-                                </h4>
-                                <p style="margin:10px;margin-left:1px;border-top:1px solid #d1d1d1;"></p>
-                                <p style="margin-left: 13px;margin-top:5px;">
-                                    <span style="color:#95979c;">
-                                        美丽南昌，幸福城市
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-item" style="margin-right:20px;display:inline-block;">
-                    <div style="width: 277px;height:180px;">
-                        <div style="margin:0px;">
-                            <img style="height:180px;width:412px;" src="http://img.wqdian.com/group4/M00/8B/0A/yq0KYFdsyOGAe8ILAAB4x9rrHgU951.jpg">
-                        </div>
-                    </div>
-                    <div style="width: 412px; height: 120px; left: 0px; z-index: 3;background:white;">
-                        <div>
-                            <div style="width:100%;height:100%;">
-                                <h4 style="margin:0px;">
-                                    <strong style="margin-left:10px;margin-top:10px;display:inline-block;">
-                                        <span style="font-size:16px;">
-                                            <span style="color:#363c48;">南昌</span>
-                                        </span>
-                                    </strong>
-                                </h4>
-                                <p style="margin:10px;margin-left:1px;border-top:1px solid #d1d1d1;"></p>
-                                <p style="margin-left: 13px;margin-top:5px;">
-                                    <span style="color:#95979c;">
-                                        美丽南昌，幸福城市
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+                }
             </div>
         </div>
     </section>
     <section style="height:606px;margin-top:10px;background-color:#fafafa;position:relative;">
         <div class="background" style="margin-top:10px;position:relative;">
             <div style="padding-top:40px;text-align:center;">
-                <h1 style="font-weight:normal;font-size:30px;">导游风采</h1>
-                <p style="color:#808080;">严格按照国家相关法律法规，为广大消费者提供高品质，有保障，丰富多彩的旅游产品</p>
+                <h1 style="font-weight:normal;font-size:30px;">华学优势</h1>
+                <p style="color:#808080;">华学坚持以“缔造全国领先教育旅游集团企业，成就华学知名品牌”为目标</p>
             </div>
             <div class="card card_no_index_03" style="position:relative;z-index:1;visibility:visible;width:1240px;margin-left:auto;margin-right:auto;margin-top:60px;">
-                <div class="card-item" style="margin-right:20px;display:inline-block;cursor:pointer;background:#3DC288;color:white;">
-                    <div style="width: 380px; height: 230px; left: 0px;">
-                        <div>
-                            <div>
-                                <div style="width:100%;height:100%;">
-                                    <p style="display:inline-block;width:40px;height:40px;text-align:center;line-height:40px;float:left;background:#18B292;margin-left:10px;">
-                                        1
-                                    </p>
-                                    <div style="display:inline-block;margin-left: 6px;margin-top:5px;height:160px;float:right;width:300px;margin-right:10px;margin-top:10px;">
-                                        <h3 style="margin:5px;margin-left:0px;">军事化训练</h3>
-                                        <span style="color:white;">
-                                            导游主要分为中文导游和外语导游。其主要工作内容为引导游客感受山水之美解决旅途中可能出现的突发事件，并给予游客食、宿、行等方面的帮助。
-                                        </span>
+                @{
+                    for (var i = 0; i < ViewBag.IndexThird.Count; i++)
+                    {
+                        if (i == 0)
+                        {
+                            <div class="card-item" style="margin-right:20px;display:inline-block;cursor:pointer;background:#3DC288;color:white;">
+                                <div style="width: 380px; height: 230px; left: 0px;">
+                                    <div>
+                                        <div>
+                                            <div style="width:100%;height:100%;">
+                                                <p style="display:inline-block;width:40px;height:40px;text-align:center;line-height:40px;float:left;background:#18B292;margin-left:10px;">
+                                                    1
+                                                </p>
+                                                <div style="display:inline-block;margin-left: 6px;margin-top:5px;height:160px;float:right;width:300px;margin-right:10px;margin-top:10px;">
+                                                    <h3 style="margin:5px;margin-left:0px;">@ViewBag.IndexThird[0].Title</h3>
+                                                    <span style="color:white;">
+                                                        @ViewBag.IndexThird[0].Description
+                                                    </span>
+                                                </div>
+                                                <div style="clear:both;"></div>
+                                            </div>
+                                            <p style="margin:10px;margin-left:0px;margin-right:0px;border-top:1px solid white;"></p>
+                                            <h4 style="margin:0px;line-height:24px;margin-left:60px;">
+                                                <strong style="margin-left:10px;margin-top:5px;display:inline-block;">
+                                                    <span style="font-size:16px;">
+                                                        <span style="color:white;">@ViewBag.IndexThird[0].Name</span>
+                                                    </span>
+                                                </strong>
+                                            </h4>
+                                        </div>
                                     </div>
-                                    <div style="clear:both;"></div>
                                 </div>
-                                <p style="margin:10px;margin-left:0px;margin-right:0px;border-top:1px solid white;"></p>
-                                <h4 style="margin:0px;line-height:24px;margin-left:60px;">
-                                    <strong style="margin-left:10px;margin-top:5px;display:inline-block;">
-                                        <span style="font-size:16px;">
-                                            <span style="color:white;">南昌</span>
-                                        </span>
-                                    </strong>
-                                </h4>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-item" style="margin-right:20px;display:inline-block;cursor:pointer;background:#14B9D5!important;color:white;">
-                    <div style="width: 380px; height: 230px; left: 0px;">
-                        <div>
-                            <div>
-                                <div style="width:100%;height:100%;">
-                                    <p style="display:inline-block;width:40px;height:40px;text-align:center;line-height:40px;float:left;background:#3d9be9;margin-left:10px;">
-                                        2
-                                    </p>
-                                    <div style="display:inline-block;margin-left: 6px;margin-top:5px;height:160px;float:right;width:300px;margin-right:10px;margin-top:10px;">
-                                        <h3 style="margin:5px;margin-left:0px;">军事化训练</h3>
-                                        <span style="color:white;">
-                                            导游主要分为中文导游和外语导游。其主要工作内容为引导游客感受山水之美解决旅途中可能出现的突发事件，并给予游客食、宿、行等方面的帮助。
-                                        </span>
+                        }
+                        else if (i == 1)
+                        {
+
+                            <div class="card-item" style="margin-right:20px;display:inline-block;cursor:pointer;background:#14B9D5!important;color:white;">
+                                <div style="width: 380px; height: 230px; left: 0px;">
+                                    <div>
+                                        <div>
+                                            <div style="width:100%;height:100%;">
+                                                <p style="display:inline-block;width:40px;height:40px;text-align:center;line-height:40px;float:left;background:#3d9be9;margin-left:10px;">
+                                                    2
+                                                </p>
+                                                <div style="display:inline-block;margin-left: 6px;margin-top:5px;height:160px;float:right;width:300px;margin-right:10px;margin-top:10px;">
+                                                    <h3 style="margin:5px;margin-left:0px;">@ViewBag.IndexThird[1].Title</h3>
+                                                    <span style="color:white;">
+                                                        @ViewBag.IndexThird[1].Description
+                                                    </span>
+                                                </div>
+                                                <div style="clear:both;"></div>
+                                            </div>
+                                            <p style="margin:10px;margin-left:0px;margin-right:0px;border-top:1px solid white;"></p>
+                                            <h4 style="margin:0px;line-height:24px;margin-left:60px;">
+                                                <strong style="margin-left:10px;margin-top:5px;display:inline-block;">
+                                                    <span style="font-size:16px;">
+                                                        <span style="color:white;">@ViewBag.IndexThird[1].Name</span>
+                                                    </span>
+                                                </strong>
+                                            </h4>
+                                        </div>
                                     </div>
-                                    <div style="clear:both;"></div>
                                 </div>
-                                <p style="margin:10px;margin-left:0px;margin-right:0px;border-top:1px solid white;"></p>
-                                <h4 style="margin:0px;line-height:24px;margin-left:60px;">
-                                    <strong style="margin-left:10px;margin-top:5px;display:inline-block;">
-                                        <span style="font-size:16px;">
-                                            <span style="color:white;">南昌</span>
-                                        </span>
-                                    </strong>
-                                </h4>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-item" style="margin-right:20px;display:inline-block;cursor:pointer;background:#FFD205!important;color:white;">
-                    <div style="width: 380px; height: 230px; left: 0px;">
-                        <div>
-                            <div>
-                                <div style="width:100%;height:100%;">
-                                    <p style="display:inline-block;width:40px;height:40px;text-align:center;line-height:40px;float:left;background:#F4C906;margin-left:10px;">
-                                        3
-                                    </p>
-                                    <div style="display:inline-block;margin-left: 6px;margin-top:5px;height:160px;float:right;width:300px;margin-right:10px;margin-top:10px;">
-                                        <h3 style="margin:5px;margin-left:0px;">军事化训练</h3>
-                                        <span style="color:white;">
-                                            导游主要分为中文导游和外语导游。其主要工作内容为引导游客感受山水之美解决旅途中可能出现的突发事件，并给予游客食、宿、行等方面的帮助。
-                                        </span>
+                        }
+                        else if (i == 2)
+                        {
+                            <div class="card-item" style="margin-right:20px;display:inline-block;cursor:pointer;background:#FFD205!important;color:white;">
+                                <div style="width: 380px; height: 230px; left: 0px;">
+                                    <div>
+                                        <div>
+                                            <div style="width:100%;height:100%;">
+                                                <p style="display:inline-block;width:40px;height:40px;text-align:center;line-height:40px;float:left;background:#F4C906;margin-left:10px;">
+                                                    3
+                                                </p>
+                                                <div style="display:inline-block;margin-left: 6px;margin-top:5px;height:160px;float:right;width:300px;margin-right:10px;margin-top:10px;">
+                                                    <h3 style="margin:5px;margin-left:0px;">@ViewBag.IndexThird[2].Title</h3>
+                                                    <span style="color:white;">
+                                                       @ViewBag.IndexThird[2].Description
+                                                    </span>
+                                                </div>
+                                                <div style="clear:both;"></div>
+                                            </div>
+                                            <p style="margin:10px;margin-left:0px;margin-right:0px;border-top:1px solid white;"></p>
+                                            <h4 style="margin:0px;line-height:24px;margin-left:60px;">
+                                                <strong style="margin-left:10px;margin-top:5px;display:inline-block;">
+                                                    <span style="font-size:16px;">
+                                                        <span style="color:white;">@ViewBag.IndexThird[2].Name</span>
+                                                    </span>
+                                                </strong>
+                                            </h4>
+                                        </div>
                                     </div>
-                                    <div style="clear:both;"></div>
                                 </div>
-                                <p style="margin:10px;margin-left:0px;margin-right:0px;border-top:1px solid white;"></p>
-                                <h4 style="margin:0px;line-height:24px;margin-left:60px;">
-                                    <strong style="margin-left:10px;margin-top:5px;display:inline-block;">
-                                        <span style="font-size:16px;">
-                                            <span style="color:white;">南昌</span>
-                                        </span>
-                                    </strong>
-                                </h4>
                             </div>
-                        </div>
-                    </div>
-                </div>
+
+                        }
+                    }
+                }
+
+
             </div>
         </div>
     </section>
     <section style="height:936px;margin-top:30px;background-color:white;position:relative;">
         <div class="background" style="margin-top:20px;position:relative;">
             <div style="padding-top:40px;text-align:center;">
-                <h1 style="font-weight:normal;font-size:30px;">旅游项目</h1>
+                <h1 style="font-weight:normal;font-size:30px;">2017化学夏季研学产品</h1>
                 <p style="border-top:1px solid #069ec0!important;"></p>
             </div>
             <div class="card card_no_index_04" style="position:relative;z-index:1;visibility:visible;width:1240px;margin-left:auto;margin-right:auto;margin-top:60px;">
                 <div>
                     <div style="display:inline-block;width:180px;height:30px;text-align:center;border:1px solid #069ec0!important;line-height:30px;font-size:16px;cursor:pointer;margin:10px;margin-right:45px;">
-                        南&nbsp;昌
+                        军事研学营
                     </div>
                     <div style="display:inline-block;width:180px;height:30px;text-align:center;border:1px solid #069ec0!important;line-height:30px;font-size:16px;cursor:pointer;margin:10px;margin-right:45px;">
-                        抚州临川
+                        井冈山研学营
+                    </div>
+                    <div style="display:inline-block;width:180px;height:30px;text-align:center;border:1px solid #069ec0!important;line-height:30px;font-size:16px;cursor:pointer;margin:10px;margin-right:45px;">                        北京研学营 
                     </div>
                     <div style="display:inline-block;width:180px;height:30px;text-align:center;border:1px solid #069ec0!important;line-height:30px;font-size:16px;cursor:pointer;margin:10px;margin-right:45px;">
-                        南&nbsp;昌
-                    </div>
-                    <div style="display:inline-block;width:180px;height:30px;text-align:center;border:1px solid #069ec0!important;line-height:30px;font-size:16px;cursor:pointer;margin:10px;margin-right:45px;">
-                        南&nbsp;昌
+                        美国研学营（1）
                     </div>
                     <div style="display:inline-block;width:180px;height:30px;text-align:center;border:1px solid #069ec0!important;line-height:30px;font-size:16px;cursor:pointer;margin:10px;margin-right:35px;">
-                        南&nbsp;昌
+                        美国研学营（2）
                     </div>
                 </div>
             </div>
@@ -401,8 +345,8 @@
     <section style="height:606px;margin-top:30px;background-color:#fafafa;position:relative;">
         <div class="background" style="margin-top:20px;position:relative;">
             <div style="padding-top:40px;text-align:center;">
-                <h1 style="font-weight:normal;font-size:30px;color:black;">联系我们</h1>
-                <p style="color:#808080;">8万余种旅游产品供消费者选择，已成功服务累计超过400万人次出游</p>
+                <h1 style="font-weight:normal;font-size:30px;color:black;">研学预约报名</h1>
+                <p style="color:#808080;">研学旅行在中国-华学研学</p>
             </div>
             <div class="card-item" style="margin-right:20px;cursor:pointer;color:white;margin-left:auto;margin-right:auto;width:400px;">
                 <div style="width: 380px; height: 230px; left: 0px;margin-top:20px;">
@@ -420,18 +364,17 @@
         <div class="background" style="margin-top:20px;position:relative;">
             <div style="padding-top:40px;text-align:center;color:black;">
                 <h1 style="font-weight:600;font-size:30px;">华学旅游</h1>
-                <p style="margin:5px;">产品全面，价格透明，全年365天24小时400电话预订</p>
-                <p style="margin:5px;">南昌唯一一家横跨江西全景旅游企业，支持各种旅游行为</p>
-                <p style="margin:0px;margin-top:40px;color:#808080;">联系邮箱：476160173@qq.com</p>
-                <p style="margin:0px;margin-top:5px;color:#808080;">微信公众号：476160173@qq.com</p>
-                <p style="margin:0px;margin-top:5px;color:#808080;">技术支持：476160173@qq.com</p>
+                <p style="margin:5px;">最好的课堂在路上&nbsp;&nbsp;&nbsp;跟着课本游中国</p>
+                
+                <p style="margin:0px;margin-top:40px;color:#808080;">联系邮箱：1986953598@qq.com</p>
+                <p style="margin:0px;margin-top:5px;color:#808080;"><a href="http://www.jxqianniao.com?comefrom=huaxueyanxue">技术支持：千鸟科技</a></p>
                 <p style="margin-top:30px;border-bottom:0.5px solid #eeeeee;width:960px;margin-left:auto;margin-right:auto;"></p>
                 <ul style="list-style:none;margin:0px;padding:0px;">
-                    
+
                     <li style="width: 28.1962px; height: 28.1962px; margin: 0px 5.35376px 0px 0px;display:inline-block;cursor:pointer;" class="btn-share" data-type="weixin">
                         <svg viewBox="0 0 1800 1800" xmlns="http://www.w3.org/2000/svg"><path fill="#aaa" d="M896,0C401.2,0,0,401.2,0,896s401.2,896,896,896s896-401.2,896-896S1390.8,0,896,0z M896,1743.3  C428.1,1743.3,48.7,1364,48.7,896S428.1,48.7,896,48.7S1743.3,428,1743.3,896S1363.9,1743.3,896,1743.3z M1072.3,735.8  c11.4,0,22.7,0.8,34,2.1c-30.5-142-182.4-247.7-355.8-247.7c-193.8,0-352.6,132.1-352.6,299.9c0,96.9,52.8,176.4,141.1,238.1  l-35.3,106.1l123.2-61.8c44.1,8.8,79.5,17.7,123.5,17.7c11.1,0,22.1-0.6,32.9-1.4c-7-23.6-10.9-48.2-10.9-73.9  C772.5,860.8,904.8,735.8,1072.3,735.8z M882.7,640.2c26.5,0,44.1,17.4,44.1,44c0,26.4-17.6,44.1-44.1,44.1c-26.4,0-53-17.7-53-44.1  C829.8,657.7,856.3,640.2,882.7,640.2z M636,728.3c-26.4,0-53.1-17.7-53.1-44.1c0-26.5,26.7-44,53.1-44c26.4,0,44,17.4,44,44  C680,710.6,662.4,728.3,636,728.3z M1094.6,754.7c-167.8,0-299.9,114.9-299.9,255.9c0,141.2,132.2,255.8,299.9,255.8  c35.1,0,70.5-8.9,105.8-17.6l96.8,53l-26.5-88.1c70.8-53,123.4-123.5,123.4-203C1394.1,869.6,1253.1,754.7,1094.6,754.7z   M997.4,966.5c-17.6,0-35.3-17.4-35.3-35.2c0-17.6,17.7-35.3,35.3-35.3c26.7,0,44.1,17.6,44.1,35.3S1024.1,966.5,997.4,966.5z   M1191.4,966.5c-17.5,0-35.1-17.4-35.1-35.2c0-17.6,17.6-35.3,35.1-35.3c26.4,0,44.1,17.6,44.1,35.3S1217.8,966.5,1191.4,966.5z"></path></svg>
                     </li>
-                    
+
                 </ul>
             </div>
             <p style="margin-bottom:40px;"></p>

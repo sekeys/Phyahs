@@ -5,6 +5,7 @@ namespace Phyah.Huaxue
     using Microsoft.AspNetCore.Http;
     using Phyah.Configuration;
     using Phyah.Huaxue.Biz;
+    using Phyah.Huaxue.Models;
     using Phyah.Web;
     using Phyah.Web.Razor;
     using System;
@@ -26,12 +27,22 @@ namespace Phyah.Huaxue
     }
     public class RazorBehavior : Behavior
     {
+        public class IndexViewModel
+        {
+            public List<Card> IndexSecond { get; set; }
+        }
         public override string Text => "razor";
 
-        public override  Task Invoke()
+        public override Task Invoke()
         {
             dynamic viewBag = new DynamicDictionary();
-            viewBag.TopBanner = new CardService().Single(m => m.CardNo == "Index_Top_Banner");
+            var cardService = new CardService();
+            viewBag.TopBanner = cardService.Single(m => m.CardNo == "Index_Top_Banner");
+            var IndexSecond = cardService.FindAll(m => m.CardNo == "Index_Second");
+            viewBag.IndexSecond = IndexSecond;
+            viewBag.IndexThird= cardService.FindAll(m => m.CardNo == "Index_Third");
+            viewBag.IndexFour = cardService.FindAll(m => m.CardNo == "Index_Four");
+            viewBag.IndexFive = cardService.FindAll(m => m.CardNo == "Index_Five");
             string content = new RazorViewEngine().RenderView(HttpContext, @"index", null, viewBag);
             return HttpContext.Response.WriteAsync(content);
             //HttpContext.Response.

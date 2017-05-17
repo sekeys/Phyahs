@@ -4,6 +4,7 @@
     using System.Collections.Concurrent;
     using System.Reflection;
     using Microsoft.AspNetCore.Http;
+    using System.Collections.Generic;
 
     public abstract class BehaviorFactory
     {
@@ -23,11 +24,17 @@
         {
             Factory = factory;
         }
+
+        public abstract IEnumerable<KeyValuePair<string, IBehavior>> Caches();
     }
 
     public class DefaultBehaviorFactory : BehaviorFactory
     {
         protected ConcurrentDictionary<string, IBehavior> Middles = new ConcurrentDictionary<string, IBehavior>();
+        public override IEnumerable<KeyValuePair<string, IBehavior>> Caches()
+        {
+            return Middles.ToArray();
+        }
         public override IBehavior Cache(string text)
         {
             if (string.IsNullOrWhiteSpace(text)) { return null; }

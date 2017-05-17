@@ -26,7 +26,6 @@ namespace Phyah.Web.Razor
             viewEngineCache.TryGetValue(extension, out engine);
 
             return engine;
-
         }
     }
 

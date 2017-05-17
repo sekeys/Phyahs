@@ -13,6 +13,7 @@ using Phyah.Web;
 using Microsoft.Extensions.FileProviders;
 using Phyah.Concurrency;
 using Phyah.Web.Handler;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace Phyah.Huaxue
 {
@@ -74,6 +75,7 @@ namespace Phyah.Huaxue
                     
                 })
                 .AddLast(new InitializedHandler())
+                .AddLast(new PathResetHandler())
                 .AddLast(new ProcessHandler())
                 );
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(IndexBehavior));
@@ -93,6 +95,12 @@ namespace Phyah.Huaxue
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication();
+            services.Configure<FormOptions>(options =>
+            {
+                options.ValueLengthLimit = int.MaxValue;
+                options.MultipartBodyLengthLimit = int.MaxValue;
+                options.BufferBodyLengthLimit = int.MaxValue;
+            });
         }
 
         public IConfigurationRoot Configuration { get; private set; }
@@ -130,5 +138,6 @@ namespace Phyah.Huaxue
             });
             app.UseMiddleware<PhyahMiddleware>();
         }
+
     }
 }

@@ -1,7 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ChakraCore.NET" Version="1.0.1" />
+    <PackageReference Include="ChakraCore.NET.Core" Version="1.0.1" />
+    <PackageReference Include="ChakraCore.NET.Promise" Version="1.0.0" />
+    <PackageReference Include="ChakraCore.NET.ShareMemoryObjects" Version="1.0.0" />
+    <PackageReference Include="ChakraCore.NET.Timer" Version="1.0.0" />
+    <PackageReference Include="Microsoft.ChakraCore" Version="1.4.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Phyah\Phyah.csproj" />
+  </ItemGroup>
 
 </Project>

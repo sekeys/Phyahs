@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Phyah.Javascript
+namespace Phyah.Resource
 {
     public class Class1
     {
