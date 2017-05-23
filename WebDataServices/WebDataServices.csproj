@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Phyah.Services.Interface\Phyah.Services.Interface.csproj" />
+    <ProjectReference Include="..\Phyah.Web\Phyah.Web.csproj" />
+    <ProjectReference Include="..\Phyah\Phyah.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.1" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="7.0.7-m61" />
+  </ItemGroup>
+
+</Project>

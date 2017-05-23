@@ -14,6 +14,8 @@ using Microsoft.Extensions.FileProviders;
 using Phyah.Concurrency;
 using Phyah.Web.Handler;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Routing;
+using Phyah.Web.Extends;
 
 namespace Phyah.Huaxue
 {
@@ -44,7 +46,7 @@ namespace Phyah.Huaxue
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                
+
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -59,20 +61,22 @@ namespace Phyah.Huaxue
             Phyah.Configuration.ConfigurationManager.Manager.Configure();
             Phyah.Web.Initialization.Initialize();
             Phyah.Web.Initialization.InitializePipeline(new StaticPipeline(
-                () => {
+                () =>
+                {
                     //var resp = AccessorContext.DefaultContext.Get<HttpContext>().Response;
                     //resp.StatusCode= 500;
                     //AccessorContext.DefaultContext.Get<HttpContext>().Response.WriteAsync("ex.ToString()");
                 },
-                () => {
+                () =>
+                {
                     //AccessorContext.DefaultContext.Get<HttpContext>().Response.WriteAsync("ex.ToString()");
                 },
                 (ex) =>
                 {
-                    var resp=AccessorContext.DefaultContext.Get<HttpContext>().Response;
+                    var resp = AccessorContext.DefaultContext.Get<HttpContext>().Response;
                     resp.Clear();
                     resp.WriteAsync(ex.ToString());
-                    
+
                 })
                 .AddLast(new InitializedHandler())
                 .AddLast(new PathResetHandler())
@@ -84,13 +88,13 @@ namespace Phyah.Huaxue
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(UserListBehavior));
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(CardsBehavior));
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(CardListBehavior));
-            Phyah.Web.BehaviorFactory.Factory.Cache(typeof(ModuleBehavior)); 
+            Phyah.Web.BehaviorFactory.Factory.Cache(typeof(ModuleBehavior));
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(ModuleListBehavior));
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(PageListBehavior));
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(PageBehavior));
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(PageModulesBehavior));
             Phyah.Web.BehaviorFactory.Factory.Cache(typeof(UploadBehavior));
-            Phyah.Web.BehaviorFactory.Factory.Cache(typeof(RazorBehavior)); 
+            Phyah.Web.BehaviorFactory.Factory.Cache(typeof(RazorBehavior));
         }
         public void ConfigureServices(IServiceCollection services)
         {
@@ -101,6 +105,7 @@ namespace Phyah.Huaxue
                 options.MultipartBodyLengthLimit = int.MaxValue;
                 options.BufferBodyLengthLimit = int.MaxValue;
             });
+            services.AddRouting();
         }
 
         public IConfigurationRoot Configuration { get; private set; }
@@ -135,6 +140,27 @@ namespace Phyah.Huaxue
                 CookieName = ".u",
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
+            });
+
+            app.UseRouter(routes =>
+            {
+                routes.DefaultHandler = new RouteHandler((httpContext) =>
+                {
+                    var request = httpContext.Request;
+                    return httpContext.Response.WriteAsync($"Verb =  {request.Method.ToUpperInvariant()} - Path = {request.Path} - Route values - {string.Join(", ", httpContext.GetRouteData().Values)}");
+                });
+
+                routes
+                .MapGet("api/get/{id}", (request, response, routeData) =>
+                    response.WriteAsync($"API Get {string.Join(", ",routeData.Values)}")
+                )
+                      .MapMiddlewareRoute("api/middleware", (appBuilder) => appBuilder.Use((httpContext, next) => httpContext.Response.WriteAsync("Middleware!")))
+                //      .MapRoute(
+                //        name: "AllVerbs",
+                //        template: "api/all/{name}/{lastName?}",
+                //        defaults: new { lastName = "Doe" },
+                //        constraints: new { lastName = new RegexRouteConstraint(new Regex("[a-zA-Z]{3}", RegexOptions.CultureInvariant, RegexMatchTimeout)) });
+                ;
             });
             app.UseMiddleware<PhyahMiddleware>();
         }

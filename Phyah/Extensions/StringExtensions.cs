@@ -22,6 +22,39 @@ namespace Phyah.Extensions
             return Convert.ToInt64(str);
         }
 
+        public static DateTime ToDateTime(this string str, DateTime value)
+        {
+            try
+            {
+                return Convert.ToDateTime(str);
+            }
+            catch
+            {
+                return value;
+            }
+        }
+        public static decimal ToDecimal(this string str, decimal value)
+        {
+            try
+            {
+                return Convert.ToDecimal(str);
+            }
+            catch
+            {
+                return value;
+            }
+        }
+        public static double ToDouble(this string str, double value)
+        {
+            try
+            {
+                return Convert.ToDouble(str);
+            }
+            catch
+            {
+                return value;
+            }
+        }
         public static int ToInt32(this string str, int value)
         {
             try

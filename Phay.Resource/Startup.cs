@@ -17,13 +17,17 @@ namespace Phay.Resource
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+            services.AddMvc();
         }
+        public static IApplicationBuilder AppBuilder { get;private set; }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole();
-
+            AppBuilder = app;
+            Varibles.HostPath = env.ContentRootPath;
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -49,6 +53,12 @@ namespace Phay.Resource
                 FileProvider = new PhysicalFileProvider(System.IO.Path.Combine(env.ContentRootPath, "wwwroot", "resource")),
                 RequestPath = new PathString("/reses")
             });
+            app.UseCors((c) => {
+                c.WithHeaders("cors-domain");
+                c.AllowAnyOrigin();
+            });
+            app.UseMvcWithDefaultRoute();
         }
+
     }
 }
