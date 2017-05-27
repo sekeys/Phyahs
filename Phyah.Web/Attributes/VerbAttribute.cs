@@ -1,6 +1,6 @@
 ﻿
 
-namespace Phyah.Attributes
+namespace Phyah.Web.Attributes
 {
     using System;
     using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Phyah", "Phyah\Phyah.csproj", "{A86AC004-B219-489D-838C-7EB2B10E8C3B}"
 EndProject
@@ -58,6 +58,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02.WebDataServices", "02.WebDataServices", "{A8655C81-EF6A-422F-9BE6-94C809F1C0EC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Phyah.Services.Interface", "Phyah.Services.Interface\Phyah.Services.Interface.csproj", "{AB78C81B-5F63-4473-BF8E-EE335524D7FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Phyah.Web.MVC", "Phyah.Web.MVC\Phyah.Web.MVC.csproj", "{384EBA3D-E5B4-49CC-A0EF-2C6EAD510568}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -149,6 +151,10 @@ Global
 		{AB78C81B-5F63-4473-BF8E-EE335524D7FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB78C81B-5F63-4473-BF8E-EE335524D7FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB78C81B-5F63-4473-BF8E-EE335524D7FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{384EBA3D-E5B4-49CC-A0EF-2C6EAD510568}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{384EBA3D-E5B4-49CC-A0EF-2C6EAD510568}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{384EBA3D-E5B4-49CC-A0EF-2C6EAD510568}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{384EBA3D-E5B4-49CC-A0EF-2C6EAD510568}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -179,5 +185,6 @@ Global
 		{B010FC11-25FD-476F-B50D-42DC74EF35EB} = {A8655C81-EF6A-422F-9BE6-94C809F1C0EC}
 		{A8655C81-EF6A-422F-9BE6-94C809F1C0EC} = {5826688D-A5B7-44BB-913D-7740D420AF1F}
 		{AB78C81B-5F63-4473-BF8E-EE335524D7FA} = {E7881427-C438-4099-B74E-FE09C5802181}
+		{384EBA3D-E5B4-49CC-A0EF-2C6EAD510568} = {9B57D1C5-CD32-4FF6-BB5D-392B5A4B864F}
 	EndGlobalSection
 EndGlobal

@@ -12,9 +12,9 @@ namespace Phyah.Huaxue
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    public class IndexBehavior : Behavior
+    public class RazorBehavior : Behavior
     {
-        public override string Text => "Index";
+        public override string Text => "razor";
 
         public override Task Invoke()
         {
@@ -25,13 +25,13 @@ namespace Phyah.Huaxue
             //HttpContext.Response.
         }
     }
-    public class RazorBehavior : Behavior
+    public class IndexBehavior : Behavior
     {
         public class IndexViewModel
         {
             public List<Card> IndexSecond { get; set; }
         }
-        public override string Text => "razor";
+        public override string Text => "index";
 
         public override Task Invoke()
         {

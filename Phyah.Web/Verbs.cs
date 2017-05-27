@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Phyah.Enumerable
 {
+    [Flags]
     public enum Verbs
     {
         Get,
