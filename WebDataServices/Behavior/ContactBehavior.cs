@@ -1,19 +1,21 @@
 ﻿using Phyah.Extensions;
 using Phyah.Web;
 using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Phyah.WebDataServices.Services
 {
-    public class CardBehavior : RestBehavior
+    public class ContactBehavior : RestBehavior
     {
-        private ICardService Service;
+        public override string Text => "contact";
+        private IContactorService Service;
 
-        public CardBehavior(ICardService service)
+        public ContactBehavior(IContactorService service)
         {
             Service = service;
         }
-        public override string Text => "card";
         public async Task Get()
         {
             var sys = Parameter.Get<string>("system");
@@ -31,11 +33,10 @@ namespace Phyah.WebDataServices.Services
                 collection = result.Item2
             });
         }
-
         public async Task Options()
         {
             var sys = Parameter.Get<string>("system");
-            Card card = Request.Form.Serialized<Card>();
+            Contactor card = Request.Form.Serialized<Contactor>();
             card.System = sys;
             var result = await Service.MultipleAsync();
             await Json(new
@@ -45,24 +46,25 @@ namespace Phyah.WebDataServices.Services
                 result = true
             });
         }
+
         public async Task Post()
         {
             var sys = Parameter.Get<string>("system");
-            Card card = Request.Form.Serialized<Card>();
-            card.System = sys;
-            var result = await Service.NewOrUpdateAsync(card);
+            Contactor model = Request.Form.Serialized<Contactor>();
+            model.System = sys;
+            var result = await Service.NewOrUpdateAsync(model);
             await Json(new
             {
                 status = 200,
-                model = card,
-                result=true
+                model = model,
+                result = true
             });
         }
+
         public async Task Head()
         {
             var sys = Parameter.Get<string>("system");
             string id = Request.Form["id"].ToString();
-            
             var result = await Service.SingleAsync(id);
             await Json(new
             {
@@ -74,16 +76,15 @@ namespace Phyah.WebDataServices.Services
         public async Task Put()
         {
             var sys = Parameter.Get<string>("system");
-            Card card = Request.Form.Serialized<Card>();
-            card.System = sys;
-            var result = await Service.NewOrUpdateAsync(card);
+            Contactor model = Request.Form.Serialized<Contactor>();
+            model.System = sys;
+            var result = await Service.NewOrUpdateAsync(model);
             await Json(new
             {
                 status = 200,
-                model = card,
+                model = model,
                 result = true
             });
         }
-
     }
 }

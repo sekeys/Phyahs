@@ -9,6 +9,7 @@ namespace Phyah.Web
     using System.Threading.Tasks;
     using Phyah.Interface;
     using Phyah.Debug;
+    using Phyah.Concurrency;
 
     [Assert("Anonymouse Middleware...")]
     public class AnonymousBehavior : IBehavior
@@ -17,6 +18,9 @@ namespace Phyah.Web
 
         public bool AllowDebug { get; private set; }
         public Type Type { get; private set; }
+
+        public IParameter Parameter => AbstractPipeline.Parameter;
+
         public async Task Invoke()
         {
             await Task.Run(() =>

@@ -7,7 +7,7 @@ namespace Phyah.Web.Router
 {
     public class ParameterModel
     {
-        public ActionModel Action { get; set; }
+        //public ActionModel Action { get; set; }
 
         public IReadOnlyList<object> Attributes { get; }
 

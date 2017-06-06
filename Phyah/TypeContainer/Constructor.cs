@@ -4,14 +4,19 @@ namespace Phyah.TypeContainer
     using System;
     using System.Collections.Generic;
     using System.Reflection;
-    using System.Text;
+    using System.Linq;
 
     public class Constructor
     {
         public static object Construct(Type baseType)
         {
             Type type = TypeContainer.Container.Fetch(baseType);
-            var constructors = type.GetTypeInfo().GetConstructors();
+            if (type == null)
+            {
+                type = baseType;
+            }
+            var constructors = type.GetTypeInfo().GetConstructors().OrderBy(m=>m.GetParameters().Length).ToArray();
+
             if (constructors.Length != 0)
             {
                 var constructor = constructors[0];

@@ -9,6 +9,22 @@ namespace Phyah.Concurrency
     using System.Threading.Tasks;
     public abstract class AbstractPipeline : IPipeline
     {
+        protected class SessionParameter : Parameter
+        {
+
+        }
+        public static Parameter Parameter
+        {
+            get
+            {
+                var param = Accessor<SessionParameter>.Current;
+                if (param == null)
+                {
+                    param = new SessionParameter();
+                }
+                return (Accessor<SessionParameter>.Current = param);
+            }
+        }
         internal class HandlerContext : AbstractHandlerContext
         {
             public volatile HandlerContext Prev;
@@ -107,7 +123,7 @@ namespace Phyah.Concurrency
                 this.Handler = new ActionHandler(() =>
                 {
                     ((AbstractPipeline)pipeline).State = PipelineState.Running;
-                    
+
                 });
             }
             public override void Handle()
@@ -127,7 +143,7 @@ namespace Phyah.Concurrency
 
                 });
             }
-            
+
             public override void Handle()
             {
                 //this.Completed();

@@ -62,7 +62,7 @@
             var type = typeof(T);
             if (type.GetTypeInfo().IsAssignableFrom(typeof(IBehavior)))
             {
-                Cache(Activator.CreateInstance(type) as IBehavior);
+                Cache(TypeContainer.Constructor.Construct(type) as IBehavior);
             }
             else
             {
@@ -73,7 +73,8 @@
         {
             if (typeof(IBehavior).GetTypeInfo().IsAssignableFrom(type))
             {
-                Cache(Activator.CreateInstance(type) as IBehavior);
+                
+                Cache(TypeContainer.Constructor.Construct(type) as IBehavior);
             }
             else
             {

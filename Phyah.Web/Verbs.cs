@@ -13,6 +13,7 @@ namespace Phyah.Enumerable
         Head,
         Put,
         Options,
+        Patch,
         Unsafe,
         Auth,
         Other

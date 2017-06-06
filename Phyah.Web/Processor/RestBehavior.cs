@@ -3,6 +3,8 @@
 namespace Phyah.Web
 {
     using Phyah.Authentication;
+    using Phyah.Concurrency;
+    using Phyah.Interface;
     using Phyah.Web.Exceptions;
     using System;
     using System.Collections.Generic;
@@ -12,6 +14,7 @@ namespace Phyah.Web
     using System.Threading.Tasks;
     public abstract class RestBehavior : Behavior
     {
+        public IParameter Parameter => AbstractPipeline.Parameter;
         static Type TaskType => typeof(Task);
         public override Task Invoke()
         {
@@ -50,7 +53,7 @@ namespace Phyah.Web
                 }
                 catch (Exception ex)
                 {
-                    await this.Status(505, ex.ToString());
+                    await this.Status(505, new { result = false, message = ex.ToString(), status = 500 });
                 }
             });
         }

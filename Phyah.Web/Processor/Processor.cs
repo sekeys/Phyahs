@@ -11,7 +11,7 @@ namespace Phyah.Web
     using Phyah.Enumerable;
     using Phyah.Interface;
 
-    public abstract class Processor
+    public abstract class Processor : IProcessor
     {
         readonly IPath path;
         public IPath Path => path;
@@ -39,6 +39,7 @@ namespace Phyah.Web
                 case "put": Verb = Verbs.Put; break;
                 case "unsafe": Verb = Verbs.Unsafe; break;
                 case "auth": Verb = Verbs.Auth; break;
+                case "patch": Verb = Verbs.Patch; break;
                 //case "get": Verb = Verbs.Get; break;
                 //case "get": Verb = Verbs.Get; break;
                 default: Verb = Verbs.Other; break;

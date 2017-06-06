@@ -31,7 +31,7 @@ namespace Phyah.TypeContainer
 
         public void Inject(Type interType, Type impType)
         {
-            Dictionary.AddOrUpdate(interType, impType, (inter, imp) => { return imp; });
+            Dictionary.AddOrUpdate(interType, impType,(baseT,newT)=> { return newT; });
         }
         public void Inject<T>(Type impType) => Inject(typeof(T), impType);
         public void Inject<baseType, ImpType>() => Inject(typeof(baseType), typeof(ImpType));

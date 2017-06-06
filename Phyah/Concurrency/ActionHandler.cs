@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Phyah.Interface;
 
 namespace Phyah.Concurrency
 {
@@ -11,7 +12,8 @@ namespace Phyah.Concurrency
         {
             this.Action = action;
         }
-        
+
+        public IParameter Parameter => AbstractPipeline.Parameter;
 
         public void Handle()
         {

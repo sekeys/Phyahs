@@ -15,6 +15,7 @@ namespace Phyah.Web.Handler
 
     public class InitializedHandler : WebHandler
     {
+     
         protected override  void HandleCore()
         {
             

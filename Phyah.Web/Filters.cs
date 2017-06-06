@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Phyah.Web
 {
-    class Filters
+    public interface IFilter
     {
+        bool OnFilting(HttpContext context);
     }
 }

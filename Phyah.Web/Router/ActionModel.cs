@@ -25,9 +25,9 @@ namespace Phyah.Web.Router
             
             Attributes = new List<object>(attributes);
             Parameters = new List<ParameterModel>();
-            //RouteValues = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             Properties = new Dictionary<object, object>();
-            //Selectors = new List<SelectorModel>();
+            RouteValues = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            Filters = new List<IFilter>();
         }
 
         public MethodInfo Method { get; set; }

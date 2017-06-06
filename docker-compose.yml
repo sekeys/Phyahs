@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  webdataapi:
+    image: webdataapi
+    build:
+      context: ./WebDataApi
+      dockerfile: Dockerfile

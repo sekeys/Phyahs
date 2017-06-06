@@ -8,6 +8,9 @@ namespace Phyah.Web.Router
 {
     public class BehaviorModel
     {
+        private Dictionary<string, string> RouteValues;
+        private List<IFilter> Filters;
+
         public BehaviorModel(
               TypeInfo type,
               IReadOnlyList<object> attributes)
@@ -25,9 +28,9 @@ namespace Phyah.Web.Router
 
             Attributes = new List<object>(attributes);
             Parameters = new List<ParameterModel>();
-            //RouteValues = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            RouteValues = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            Filters = new List<IFilter>();
             Properties = new Dictionary<object, object>();
-            //Selectors = new List<SelectorModel>();
         }
 
         public TypeInfo Type { get; set; }

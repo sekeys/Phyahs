@@ -6,6 +6,11 @@
 
   <ItemGroup>
     <Compile Remove="Processor\ProcessorMappingFactory.cs" />
+    <Compile Remove="Router\ActionModel.cs" />
+    <Compile Remove="Router\ActionSelector.cs" />
+    <Compile Remove="Router\BehaviorModel.cs" />
+    <Compile Remove="Router\IActionSelector.cs" />
+    <Compile Remove="Router\RouteContext.cs" />
   </ItemGroup>
 
   <ItemGroup>

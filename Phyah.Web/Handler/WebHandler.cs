@@ -4,6 +4,7 @@
 
 namespace Phyah.Web.Handler
 {
+    using System;
     using Microsoft.AspNetCore.Http;
     using Phyah.Concurrency;
     using Phyah.Interface;
@@ -14,12 +15,14 @@ namespace Phyah.Web.Handler
         private IUser user;
         public HttpContext HttpContext => httpContext;
         public IUser User => user;
+
+        public IParameter Parameter => AbstractPipeline.Parameter;
+
         public WebHandler()
         {
         }
         public  void Handle()
         {
-
             httpContext = AccessorContext.DefaultContext.Get<HttpContext>();
             user = AccessorContext.DefaultContext.Get<IUser>();
             HandleCore();

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Phyah.Interface;
 
 namespace Phyah.Concurrency
 {
     public interface IHandler
     {
+        IParameter Parameter { get; }
         void Handle();
     }
 }

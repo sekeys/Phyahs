@@ -7,6 +7,7 @@ namespace Phyah.Concurrency
 {
     public class StaticPipeline : AbstractPipeline
     {
+        
         class PipelineScopeValue
         {
             public TaskCompletionSource TaskCompletionSource { get; set; }
@@ -78,6 +79,7 @@ namespace Phyah.Concurrency
         }
         public override void Start()
         {
+            var param = AbstractPipeline.Parameter;
             var term = new TaskCompletionSource();
             try
             {

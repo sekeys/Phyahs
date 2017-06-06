@@ -10,6 +10,8 @@ namespace Phyah.Web
     using System.IO;
     using System.Text;
     using System.Threading.Tasks;
+    using Phyah.Interface;
+
     public abstract class Behavior : IBehavior
     {
         public HttpContext HttpContext => AccessorContext.DefaultContext?.Get<HttpContext>();
@@ -62,6 +64,9 @@ namespace Phyah.Web
         //protected async Task Html() =>await HtmlFile()
         public HttpResponse Response => HttpContext.Response;
         public HttpRequest Request => HttpContext.Request;
+
+        public IParameter Parameter => AbstractPipeline.Parameter;
+
         protected async Task Content(string content, string contentType)
         {
             var httpResp = HttpContext.Response;
@@ -126,6 +131,11 @@ namespace Phyah.Web
         {
             HttpContext.Response.StatusCode = code;
             await HttpContext.Response.WriteAsync(message);
+        }
+        protected async Task Status(int code, object message)
+        {
+            HttpContext.Response.StatusCode = code;
+            await HttpContext.Response.WriteAsync(Newtonsoft.Json.JsonConvert.SerializeObject(message));
         }
         protected async Task NotFound() => await Status(StatusCode.NOTFOUND);
         protected async Task Script(string script)

@@ -14,6 +14,7 @@ namespace Phyah.Web
     using Phyah.Web.Router;
     using Microsoft.AspNetCore.Http;
     using Phyah.Concurrency;
+    using Phyah.Web.Attributes;
 
     public class DefaultProcessor : Processor
     {
@@ -31,10 +32,20 @@ namespace Phyah.Web
                 }
 
                 IBehavior behavior = null;
-                while ((behavior = Router.Next(path)) != null)
+
+                while (true)
                 {
-                   
+                    behavior = Router.Next(path);
+                    if (behavior == null)
+                    {
+                        break;
+                    }
                     Invoke(behavior);
+                }
+                if (!HttpContext.Response.HasStarted)
+                {
+                    HttpContext.Response.StatusCode = 404;
+                    HttpContext.Response.WriteAsync(Newtonsoft.Json.JsonConvert.SerializeObject(new { result = false, status = 404, message = "unfound the resources" })).Wait();
                 }
                 //throw new Exception("1");
             }

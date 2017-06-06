@@ -8,7 +8,7 @@ namespace Phyah.WebDataServices.Services
         public DbSet<Card> Card { set; get; }
        
         public DbSet<Article> Article { set; get; }
-        public DbSet<Navigation> Navigation { set; get; }
+        public DbSet<Contactor> Contactor { set; get; }
         public static string ConnectionString { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseMySQL(ConnectionString);

@@ -177,7 +177,24 @@ namespace Phyah.Services.Interface
         public async Task<Tuple<int, IEnumerable<T>>> PaginationAsync(int current = 1, int size = 24) => await PaginationAsync(m => 1 == 1, current, size);
 
         public async Task<Tuple<int, IEnumerable<T>>> PaginationAsync(Expression<Func<T, bool>> epxression, int current = 1, int size = 24)
-        => await PaginationAsync(Set().Where(epxression), current, size);
+        {
+            if (current == 0)
+            {
+                current = 1;
+            }
+            int count =
+                Set().Where(epxression).Count();
+
+            if (current == 1)
+            {
+                return new Tuple<int, IEnumerable<T>>(count, await Set().Skip(0).Take(size).Where(epxression).ToListAsync());
+            }
+            else
+            {
+                return new Tuple<int, IEnumerable<T>>(count
+                    , await Set().Skip((current - 1) * size).Take(size).Where(epxression).ToListAsync());
+            }
+        }
 
         public async Task<Tuple<int, IEnumerable<T>>> PaginationAsync(IQueryable<T> queryable, int current = 1, int size = 24)
         {
@@ -185,15 +202,21 @@ namespace Phyah.Services.Interface
             {
                 current = 1;
             }
-            int count = 0;
+            if (queryable == null)
+            {
+                queryable = Set();
+            }
+            int count =
+                queryable .Count();
+
             if (current == 1)
             {
-                return new Tuple<int, IEnumerable<T>>(count, await queryable.Skip(0).Take(current * size).ToListAsync());
+                return new Tuple<int, IEnumerable<T>>(count, await queryable.Skip(0).Take(size).Where(m=>1==1).ToListAsync());
             }
             else
             {
                 return new Tuple<int, IEnumerable<T>>(count
-                    , await queryable.Skip((current - 1) * size).Take(current * size).ToListAsync());
+                    , await queryable.OrderBy(m => m.Id).Skip((current - 1) * size).Take(size).Where(m => 1 == 1).ToListAsync());
             }
         }
 
@@ -203,15 +226,16 @@ namespace Phyah.Services.Interface
             {
                 current = 1;
             }
-            int count = 0;
+            int count =
+                queryable.Count();
             if (current == 1)
             {
-                return new Tuple<int, IEnumerable<T>>(count, await queryable.Skip(0).Take(current * size).ToListAsync());
+                return new Tuple<int, IEnumerable<T>>(count, await queryable .Skip(0).Take( size).Where(m => 1 == 1).ToListAsync());
             }
             else
             {
                 return new Tuple<int, IEnumerable<T>>(count
-                    , await queryable.Skip((current - 1) * size).Take(current * size).ToListAsync());
+                    , await queryable.Skip((current - 1) * size).Take( size).Where(m => 1 == 1).ToListAsync());
             }
         }
 
@@ -329,12 +353,12 @@ namespace Phyah.Services.Interface
 
         public DbSet<T> Set() => Context.Set<T>();
 
-        public T Single(IQueryable<T> queryable) => queryable.FirstOrDefault();
+        public T Single(IQueryable<T> queryable) => (queryable == null ? Set() : queryable).FirstOrDefault();
 
-        public async Task<T> SingleAsync(IQueryable<T> queryable) => await queryable.FirstOrDefaultAsync();
+        public async Task<T> SingleAsync(IQueryable<T> queryable) => await (queryable??Set()).FirstOrDefaultAsync();
 
-        public T Single(IOrderedQueryable<T> queryable) => queryable.FirstOrDefault();
+        public T Single(IOrderedQueryable<T> queryable) => (queryable == null ? Set() : (IQueryable<T>)queryable).FirstOrDefault();
 
-        public async Task<T> SingleAsync(IOrderedQueryable<T> queryable) => await queryable.FirstOrDefaultAsync();
+        public async Task<T> SingleAsync(IOrderedQueryable<T> queryable) => await (queryable == null ? Set() : (IQueryable<T>)queryable).FirstOrDefaultAsync();
     }
 }
